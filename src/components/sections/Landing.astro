@@ -1,0 +1,154 @@
+---
+import { site } from "../../lib/site";
+
+const landing = site?.landing ?? {};
+const video = landing.video ?? "/assets/landing.mp4";
+const poster = landing.poster ?? "/assets/orbit-1.webp";
+const posterAlt = landing.posterAlt ?? "Apolune landing background";
+---
+<div class="landing-intro" data-landing-intro aria-hidden="true">
+  <div class="intro-space">
+  <div class="intro-stars"></div>
+  <video class="intro-film" data-intro-film muted loop playsinline preload="auto" aria-hidden="true">
+    <source src="/assets/intro-orbit-cropped.mp4" type="video/mp4" />
+  </video>
+  <img class="landing-intro-logo" src="/assets/angel-black.webp" alt="" width="400" height="525" />
+  <div class="landing-grain intro-grain"></div>
+  </div>
+</div>
+<noscript><style>.landing-intro { display: none !important; }</style></noscript>
+<section id="landing" class="landing" aria-label={site?.name ?? "APOLUNE"}>
+  <img class="landing-poster" src={poster} alt={posterAlt} />
+  <video
+    class="landing-video"
+    data-landing-video
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    poster={poster}
+  >
+    <source src={video} type="video/mp4" />
+  </video>
+  <div class="landing-scrim"></div>
+  <div class="landing-copy">
+    <div class="landing-logo-frame">
+      <img class="landing-logo" src="/assets/apolune-emblem.webp" alt="Apolune emblem" width="1254" height="1254" />
+    </div>
+    <h1 class="h1 landing-name" data-text={site?.name}>{site?.name}</h1>
+    <div class="landing-links" role="group" aria-label="Explore Apolune">
+      {["APOLUNE ORIGINAL FILMS", "COMMERCIAL / VIDEO WORK", "PHOTOGRAPHY", "WRITING", "EVENTS", "ABOUT US / OUR MANIFESTO"].map((label) => (
+        label === "ABOUT US / OUR MANIFESTO"
+          ? <a class="landing-link" href="/manifesto">{label}</a>
+          : <button class="landing-link" type="button">{label}</button>
+      ))}
+    </div>
+    <button class="landing-link landing-reel-button" type="button" data-watch-reel aria-pressed="false">WATCH OUR REEL</button>
+  </div>
+</section>
+
+<script>
+  import { reducedMotion } from "../../scripts/lib";
+
+  const intro = document.querySelector<HTMLElement>("[data-landing-intro]");
+  const video = document.querySelector<HTMLVideoElement>("[data-landing-video]");
+  const landingSection = document.querySelector<HTMLElement>("#landing");
+  const watchReel = document.querySelector<HTMLButtonElement>("[data-watch-reel]");
+  const setReelMode = (active: boolean) => {
+    document.documentElement.classList.toggle("is-watching-reel", active);
+    watchReel?.setAttribute("aria-pressed", String(active));
+  };
+
+  watchReel?.addEventListener("click", () => setReelMode(true));
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setReelMode(false);
+  });
+  if (landingSection && watchReel) {
+    const reelObserver = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) setReelMode(false);
+    }, { threshold: 0.12 });
+    reelObserver.observe(landingSection);
+  }
+
+  const navigationType = performance.getEntriesByType("navigation")[0]?.type;
+  let shouldPlayIntro = false;
+  try {
+    shouldPlayIntro = navigationType === "reload" || !sessionStorage.getItem("apolune-home-intro-seen");
+    if (shouldPlayIntro) sessionStorage.setItem("apolune-home-intro-seen", "1");
+  } catch {
+    shouldPlayIntro = navigationType !== "back_forward";
+  }
+  let introducing = !!intro && !reducedMotion() && shouldPlayIntro;
+  const playVideo = () => {
+    if (video && !reducedMotion()) {
+      video.classList.remove("is-paused");
+      void video.play().catch(() => video.classList.add("is-paused"));
+    }
+  };
+
+  if (intro) {
+    if (!introducing) intro.remove();
+    else {
+      document.documentElement.classList.add("is-introducing");
+      window.__lenis?.stop();
+      const content = document.querySelectorAll<HTMLElement>("main, .topbar, .footer");
+      const previousInert = Array.from(content, (el) => el.inert);
+      content.forEach((el) => { el.inert = true; });
+      const finish = () => {
+        if (!introducing) return;
+        introducing = false;
+        intro.remove();
+        document.documentElement.classList.remove("is-introducing");
+        content.forEach((el, i) => { el.inert = previousInert[i]; });
+        window.__lenis?.start();
+        playVideo();
+      };
+      const orbit = intro.querySelector<HTMLVideoElement>("[data-intro-film]");
+      let started = false;
+      const start = () => {
+        if (started || !introducing) return;
+        started = true;
+        intro.classList.add("is-running");
+        if (orbit) {
+          orbit.playbackRate = 1;
+          void orbit.play().catch(() => {});
+        }
+      };
+      if (orbit && orbit.readyState < 2) orbit.addEventListener("loadeddata", start, { once: true });
+      else start();
+      window.setTimeout(start, 1500);
+      // Start the landing footage at the zoom burst.
+
+      intro.addEventListener("animationstart", (event) => {
+        if (event.animationName === "intro-reveal") playVideo();
+      });
+      intro.addEventListener("animationend", (event) => {
+        if (event.animationName === "intro-reveal") finish();
+      });
+      // Also release the page if an animation is cancelled or motion settings change.
+      intro.addEventListener("animationcancel", finish);
+      window.setTimeout(finish, 5500);
+      window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", finish, { once: true });
+    }
+  }
+  if (video) {
+    const calm = reducedMotion();
+    if (calm) {
+      video.removeAttribute("autoplay");
+      video.pause();
+      video.classList.add("is-paused");
+    } else {
+      if (introducing) video.pause();
+      video.addEventListener("error", () => video.classList.add("is-paused"), true);
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && !introducing) playVideo();
+          else video.pause();
+        },
+        { threshold: 0.2 },
+      );
+      io.observe(video);
+    }
+  }
+</script>

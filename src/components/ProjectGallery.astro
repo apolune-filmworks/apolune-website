@@ -1,0 +1,42 @@
+---
+import Icon from "./Icon.astro";
+interface Props { images: Array<string | { src: string; alt: string }>; title: string; heading?: string; itemLabel?: string; }
+const { images, title, heading = "Stills", itemLabel = "still" } = Astro.props;
+const slides = images.map((image, i) => typeof image === "string" ? { src: image, alt: `${title} — ${itemLabel} ${i + 1}` } : image);
+---
+<section class="project-stills" data-project-gallery aria-label={`${title} ${heading}`}>
+  <div class="project-section-heading"><h2>{heading}</h2><p data-gallery-count aria-live="polite">1 / {slides.length}</p></div>
+  <div class="project-stills-stage" tabindex="0" aria-label={`${heading}. Use left and right arrow keys to browse.`}>
+    {slides.map((slide, i) => <img src={slide.src} alt={slide.alt} data-still hidden={i !== 0} loading="lazy" />)}
+    {images.length > 1 && <div class="project-stills-controls">
+      <button class="round-btn" type="button" data-gallery-prev aria-label={`Previous ${itemLabel}`}><span class="gallery-back"><Icon name="arrow-right" /></span></button>
+      <button class="round-btn" type="button" data-gallery-next aria-label={`Next ${itemLabel}`}><Icon name="arrow-right" /></button>
+    </div>}
+  </div>
+  {images.length > 1 && <div class="project-thumbnails" aria-label={`Choose a ${itemLabel}`}>
+    {slides.map((slide, i) => <button type="button" data-gallery-index={i} aria-label={`Show ${itemLabel} ${i + 1}`} aria-pressed={i === 0}><img src={slide.src} alt="" loading="lazy" /></button>)}
+  </div>}
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>("[data-project-gallery]").forEach((root) => {
+    const images = Array.from(root.querySelectorAll<HTMLImageElement>("[data-still]"));
+    const thumbs = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-gallery-index]"));
+    const count = root.querySelector<HTMLElement>("[data-gallery-count]");
+    let index = 0;
+    const show = (next: number) => {
+      index = (next + images.length) % images.length;
+      images.forEach((image, i) => { image.hidden = i !== index; });
+      thumbs.forEach((thumb, i) => thumb.setAttribute("aria-pressed", String(i === index)));
+      if (count) count.textContent = `${index + 1} / ${images.length}`;
+    };
+    root.querySelector("[data-gallery-prev]")?.addEventListener("click", () => show(index - 1));
+    root.querySelector("[data-gallery-next]")?.addEventListener("click", () => show(index + 1));
+    thumbs.forEach((thumb, i) => thumb.addEventListener("click", () => show(i)));
+    root.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.preventDefault();
+        show(index + (event.key === "ArrowLeft" ? -1 : 1));
+      }
+    });
+  });
+</script>

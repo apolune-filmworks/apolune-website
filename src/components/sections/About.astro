@@ -1,0 +1,50 @@
+---
+import { site } from "../../lib/site";
+import ScrollFade from "../ScrollFade.astro";
+const { about } = site;
+---
+<section id="about-alt" class="about" aria-labelledby="about-title">
+  <div class="about-stage">
+    <div class="about-parallax" data-parallax>
+      <div class="about-media">
+        <img src={about.image} alt={about.imageAlt} loading="lazy" />
+      </div>
+    </div>
+    <div class="about-scrim" aria-hidden="true"></div>
+    <div class="about-content container">
+      <div class="about-bio-col">
+        <img class="about-logo" src={about.logo} alt="Apolune" width="1254" height="1254" loading="lazy" />
+        <h2 id="about-title" class="h2">{about.heading}</h2>
+        <ScrollFade>
+          <p class="body about-copy">{about.bio}</p>
+        </ScrollFade>
+        <div class="about-buttons">
+          <a href="/manifesto" class="landing-link">READ OUR MANIFESTO</a>
+          <button type="button" class="landing-link">MEET THE TEAM</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { onScrollFrame, reducedMotion } from "../../scripts/lib";
+
+  // Scroll parallax for the full-bleed portrait (port of ImageParallax.tsx): the
+  // media block is taller than its stage, so it drifts against the scroll (up to
+  // 210px, capped by the real overhang) while zooming in up to 24%.
+  const el = document.querySelector<HTMLElement>("[data-parallax]");
+  if (el && !reducedMotion()) {
+    const host = el.parentElement!;
+    onScrollFrame(() => {
+      const r = host.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      const child = el.firstElementChild as HTMLElement | null;
+      const slack = child ? Math.max(0, (child.offsetHeight - r.height) / 2) : 0;
+      const shift = Math.min(210, slack * 0.9);
+      const c = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2)));
+      const q = Math.max(0, Math.min(1, (vh - r.top) / vh));
+      el.style.transform = "translate3d(0," + (c * shift).toFixed(2) + "px,0) scale(" + (1 + 0.24 * q).toFixed(4) + ")";
+    });
+  }
+</script>

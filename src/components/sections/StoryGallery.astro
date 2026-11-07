@@ -1,0 +1,31 @@
+---
+import { site } from "../../lib/site";
+const images = site.gallery.images;
+---
+<section class="story-gallery" aria-labelledby="story-gallery-title">
+  <div class="story-gallery-pin">
+    <div class="story-crt-screen">
+    <div class="og-root" data-story-orbit data-swirl="true" data-images={JSON.stringify(images)}>
+      <div class="og-layer" data-layer></div>
+      <div class="og-glow" aria-hidden="true" data-glow></div>
+    </div>
+    <div class="story-gallery-copy">
+      <p class="story-gallery-intro">Apolune is a production house &amp; creative collective in Vancouver telling...</p>
+      <h2 id="story-gallery-title" class="story-gallery-title">STORIES FROM<br />THE FAR POINT.</h2>
+    </div>
+    <p class="caption story-gallery-caption">FILM · VIDEO · PHOTOGRAPHY · WRITING · EVENTS</p>
+    </div>
+    <div class="story-crt-glass" aria-hidden="true"></div>
+  </div>
+  <div class="story-gallery-still">
+    {images.slice(0, 6).map((image) => <img src={image.src} alt={image.alt} loading="lazy" />)}
+  </div>
+</section>
+
+<script>
+  import { initOrbit } from "../../scripts/orbit";
+  import { reducedMotion } from "../../scripts/lib";
+  if (!reducedMotion()) {
+    document.querySelectorAll<HTMLElement>("[data-story-orbit]").forEach(initOrbit);
+  }
+</script>

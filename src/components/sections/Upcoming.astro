@@ -1,0 +1,23 @@
+---
+import { site } from "../../lib/site";
+import Icon from "../Icon.astro";
+import ScrollFade from "../ScrollFade.astro";
+---
+<section id="upcoming" class="upcoming" aria-labelledby="upcoming-heading">
+  <h2 id="upcoming-heading" class="h3 upcoming-heading">THE BEST IS YET TO COME</h2>
+  {site.features.map((feature) => {
+    const Tag = feature.href ? "a" : "button";
+    return (
+      <ScrollFade>
+      <Tag class="upcoming-card" href={feature.href || undefined} type={feature.href ? undefined : "button"}>
+        <img class="upcoming-image" src={feature.image} alt={feature.alt} loading="lazy" />
+        <div class="upcoming-copy">
+          <h2 class="upcoming-title">{feature.title}</h2>
+          <p class="upcoming-label">{feature.label}</p>
+          <span class="pc-ref-btn" aria-hidden="true"><Icon name="carousel-arrow" size={22} /></span>
+        </div>
+      </Tag>
+      </ScrollFade>
+    );
+  })}
+</section>

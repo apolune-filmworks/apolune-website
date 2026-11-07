@@ -1,0 +1,391 @@
+{
+  "name": "APOLUNE",
+  "role": "Independent Production House & Creative Collective",
+  "tagline": "STORIES FROM THE FAR POINT.",
+  "landing": {
+    "video": "/assets/landing.mp4",
+    "poster": "/assets/orbit-1.webp",
+    "posterAlt": "Apolune landing background"
+  },
+  "projectsHeading": "Our Projects",
+  "email": "hello@apolune.net",
+  "phone": {
+    "label": "+1 (202) 555-0142",
+    "href": "tel:+12025550142"
+  },
+  "year": "2026",
+  "nav": [
+    {
+      "label": "FILM & VIDEO",
+      "href": "/#hero"
+    },
+    {
+      "label": "FILM FESTIVAL",
+      "href": "/film-festival"
+    },
+    {
+      "label": "EVENTS",
+      "href": "/#upcoming"
+    },
+    {
+      "label": "ABOUT",
+      "href": "/#about-alt"
+    },
+    {
+      "label": "MANIFESTO",
+      "href": "/manifesto"
+    },
+    {
+      "label": "CONTACT",
+      "href": "/#contact"
+    }
+  ],
+  "footerNav": [
+    {
+      "label": "Works",
+      "href": "/#work"
+    },
+    {
+      "label": "About",
+      "href": "/#about-alt"
+    },
+    {
+      "label": "Manifesto",
+      "href": "/manifesto"
+    },
+    {
+      "label": "Contact me",
+      "href": "/#contact"
+    }
+  ],
+  "socials": [
+    {
+      "label": "INSTAGRAM",
+      "href": "https://www.instagram.com/apolune.mov/"
+    },
+    {
+      "label": "LUMA",
+      "href": "https://luma.com/apolune"
+    },
+    {
+      "label": "YOUTUBE",
+      "href": "https://www.youtube.com/@ansel_tan"
+    }
+  ],
+  "about": {
+    "statement": "I shape the product where design, motion, and code meet, bringing it to life with essential animation",
+    "bio": "Apolune is an end-to-end production house and creative collective founded by cinematographer Ansel Tan and director Britney Kam. We work across mediums, from narrative film to commercial to music video, to tell STORIES FROM THE FAR POINT, and to help your visions come to life. We handle every step of the production process in-house, from ideation to shooting to even original scoring. Get in touch with us today; let's see what we can create together.",
+    "contactLead": "For enquiries or collaborations just reach out to",
+    "contactTail": "and let’s start talking.",
+    "heading": "ABOUT US",
+    "image": "/assets/apolune-team.webp",
+    "imageAlt": "The Apolune cast and crew together on set",
+    "logo": "/assets/apolune-emblem.webp"
+  },
+  "awards": [
+    {
+      "project": "PACE",
+      "award": "SITE OF THE DAY",
+      "year": "2025",
+      "cover": "/assets/award-pace.webp",
+      "alt": "Interface of mobile app"
+    },
+    {
+      "project": "FAUNA",
+      "award": "DEVELOPER AWARD",
+      "year": "2023",
+      "cover": "/assets/award-fauna.webp",
+      "alt": "Demonstration of the logo on the can"
+    },
+    {
+      "project": "LUMEN",
+      "award": "SITE OF THE DAY",
+      "year": "2024",
+      "cover": "/assets/award-lumen.webp",
+      "alt": "Laptop screen with dashboard"
+    },
+    {
+      "project": "NOVA",
+      "award": "FWA OF THE DAY",
+      "year": "2022",
+      "cover": "/assets/award-nova.webp",
+      "alt": "Phone with a dashboard"
+    },
+    {
+      "project": "HALO",
+      "award": "CSS DESIGN AWARD",
+      "year": "2023",
+      "cover": "/assets/award-halo.webp",
+      "alt": "Mockups with interface"
+    },
+    {
+      "project": "ORBIT",
+      "award": "SITE OF THE DAY",
+      "year": "2024",
+      "cover": "/assets/award-orbit.webp",
+      "alt": "Tablet with a dashboard"
+    },
+    {
+      "project": "VARIOUS PROJECTS",
+      "award": "9 HONORABLE MENTIONS",
+      "year": "2019-25",
+      "cover": "/assets/award-various.webp",
+      "alt": "Tablet with a dashboard"
+    }
+  ],
+  "principles": [
+    {
+      "title": "Design sits at the strategy table",
+      "description": "Good design starts before the first pixel — I get involved early, where the real decisions are made.",
+      "icon": "target",
+      "image": "/assets/principle-1.webp",
+      "alt": "Blurred charcoal and cream abstract streaks"
+    },
+    {
+      "title": "Motion with meaning, never decoration",
+      "description": "Every animation earns its place. I use motion to guide, explain, and make things feel inevitable.",
+      "icon": "sparkles",
+      "image": "/assets/principle-2.webp",
+      "alt": "Blurred blue-grey abstract streaks"
+    },
+    {
+      "title": "Simple, for everyone",
+      "description": "Complexity is easy, clarity is hard. I simplify until the product feels obvious to use.",
+      "icon": "smile",
+      "image": "/assets/principle-3.webp",
+      "alt": "Blurred green abstract streaks"
+    },
+    {
+      "title": "Curious and always learning",
+      "description": "I stay close to new tools and ideas, so your product never feels a step behind.",
+      "icon": "compass",
+      "image": "/assets/principle-4.webp",
+      "alt": "Blurred orange abstract streaks"
+    }
+  ],
+  "ticker": "UP TOWARD THE APOLUNE IS WHERE I LIVE OR WHERE I DIE • BORNE TOWARD THE FAR POINT AND THE GOLDEST OF GOLDEN LIGHT • LEST I LOSE MY MAGIC OR MY SWEET OLD LULLABYES • ONWARD AND UPWARD, MAN, WHERE I MAKE IT WORTH THE FIGHT.",
+  "services": [
+    {
+      "name": "Concept Development",
+      "image": "/assets/bts-betterbeings-slate.webp",
+      "alt": "A BetterBeings cast member with the production slate, ready to shoot",
+      "captions": [
+        "Ideas & Story",
+        "Creative Direction",
+        "Pre-production"
+      ]
+    },
+    {
+      "name": "Cinematography",
+      "image": "/assets/bts-betterbeings-camera-crew.webp",
+      "alt": "The BetterBeings crew framing a shot on set",
+      "captions": [
+        "Camera & Lighting",
+        "Narrative & Commercial",
+        "On-set Production"
+      ]
+    },
+    {
+      "name": "Post & Colour",
+      "image": "/assets/bts-betterbeings-monitor.webp",
+      "alt": "A monitor on the BetterBeings set showing a scene in progress",
+      "captions": [
+        "Editing",
+        "Colour Grading",
+        "Original Scoring"
+      ]
+    },
+    {
+      "name": "Publishing Strategy",
+      "image": "/assets/face-forward-team-cover.webp",
+      "alt": "The Face Forward cast and crew gathered after production",
+      "captions": [
+        "Release Planning",
+        "Distribution",
+        "Audience & Campaigns"
+      ]
+    }
+  ],
+  "gallery": {
+    "heading": "Each new project is a step forward — ",
+    "headingMuted": "a chance to learn and grow",
+    "images": [
+      {
+        "src": "/assets/wp-projects/betterbeings/01-SEQUENCE-ver-2_00_00_23_15.webp",
+        "alt": "A still from BetterBeings"
+      },
+      {
+        "src": "/assets/wp-projects/checkered-out/01-2.webp",
+        "alt": "A still from Checkered Out"
+      },
+      {
+        "src": "/assets/wp-projects/ornoasis-2/01-APL_Ansel-Tan-Demo-R2323eel-July-2026-1024x576.webp",
+        "alt": "A still from ORNOASIS"
+      },
+      {
+        "src": "/assets/the-angel-liberty.webp",
+        "alt": "Artwork for The Angel Liberty"
+      },
+      {
+        "src": "/assets/Image-Aug-27-2026-09_08_39-PM-edited.webp",
+        "alt": "Contradance concept art"
+      },
+      {
+        "src": "/assets/wp-projects/slowburn/01-DELIVERY2_LBF_Slowburn-1024x576.webp",
+        "alt": "A still from Slowburn"
+      },
+      {
+        "src": "/assets/wp-flipcards/puddy-waters.webp",
+        "alt": "Puddy Waters project artwork"
+      },
+      {
+        "src": "/assets/wp-flipcards/soundguys-android-authority.webp",
+        "alt": "SoundGuys and Android Authority project artwork"
+      },
+      {
+        "src": "/assets/wp-projects/checkered-out/03-checkeredoutpromo-5.webp",
+        "alt": "Promotional still from Checkered Out"
+      },
+      {
+        "src": "/assets/wp-projects/ornoasis-2/02-STILL-1-1024x576.webp",
+        "alt": "A second still from ORNOASIS"
+      },
+      {
+        "src": "/assets/wp-projects/betterbeings/02-betterbeings1.webp",
+        "alt": "A still from BetterBeings"
+      },
+      {
+        "src": "/assets/wp-flipcards/the-england-notebook.webp",
+        "alt": "The England Notebook project artwork"
+      }
+    ]
+  },
+  "faq": [
+    {
+      "q": "What kind of projects do you work on?",
+      "a": "We make narrative films, music videos, commercials, documentaries, and original theatre and publishing projects. We also collaborate with artists and organizations to shape an idea into a finished piece."
+    },
+    {
+      "q": "Can you help develop an idea from the beginning?",
+      "a": "Yes. We can join at the earliest concept stage and help with story, creative direction, budgeting, scheduling, production, post, colour, and original scoring. If you already have a clear brief, we can start there too."
+    },
+    {
+      "q": "Where are you based, and where do you work?",
+      "a": "Apolune is based in Vancouver, British Columbia. We work locally and travel for projects when the story or production calls for it."
+    },
+    {
+      "q": "What does working with Apolune look like?",
+      "a": "We begin with a conversation about your goals, audience, timeline, and budget. From there, we build a clear plan and keep you involved through production and delivery, with one in-house team guiding the work from start to finish."
+    },
+    {
+      "q": "How do I get a quote or discuss a project?",
+      "a": "Use the contact form or write to hello@apolune.net with a short description of the project, your timing, and any materials you already have. We’ll follow up to talk through scope and next steps."
+    }
+  ],
+  "contact": {
+    "heading": "Get in touch with us!",
+    "label": "GET IN TOUCH",
+    "text": "Tell us a bit about what you're working on — let's see what we can create together."
+  },
+  "ring": [
+    "/assets/ring-1.webp",
+    "/assets/ring-2.webp",
+    "/assets/ring-3.webp",
+    "/assets/ring-4.webp",
+    "/assets/ring-5.webp",
+    "/assets/ring-6.webp",
+    "/assets/ring-7.webp"
+  ],
+  "features": [
+    {
+      "title": "The Angel Liberty",
+      "label": "OUR NEXT PROJECT",
+      "image": "/assets/the-angel-liberty.webp",
+      "alt": "Painted angel releasing a paper airplane among red flowers beneath a starry sky",
+      "href": "/projects/the-angel-liberty"
+    },
+    {
+      "title": "CONTRADANCE",
+      "label": "OUR UPCOMING FEATURE",
+      "image": "/assets/project-cover-contradance.webp",
+      "alt": "Contradance feature film artwork",
+      "href": "/projects/contradance"
+    },
+    {
+      "title": "The Apolune Film Festival",
+      "label": "OUR NEXT EVENT",
+      "image": "/assets/festival/featured.webp",
+      "alt": "A filmmaker projects a rocket toward a red moon in a painted starry sky",
+      "href": "/film-festival"
+    }
+  ],
+  "writings": {
+    "heading": "OUR ORIGINAL WRITINGS",
+    "image": "/assets/original-writings.webp",
+    "text": "Apolune publishes an in-house blog on Substack called The Apolune Post, as well as an in-house narrative, arts & culture, and poetry magazine called LINE OF BEST FIT: Dispatches from the Long Road to Liberty. You can read both of these publications at the links below.",
+    "publications": [
+      {
+        "label": "LINE OF BEST FIT",
+        "href": "https://anseltan.ca/writing/"
+      },
+      {
+        "label": "THE APOLUNE POST",
+        "href": "https://lineofbestfit.substack.com/?utm_campaign=profile_chips"
+      }
+    ]
+  },
+  "bts": [
+    {
+      "src": "/assets/bts-face-forward-performance.webp",
+      "alt": "The camera operator films the band during the Face Forward shoot"
+    },
+    {
+      "src": "/assets/face-forward-team-cover.webp",
+      "alt": "The Face Forward cast and crew together after production"
+    },
+    {
+      "src": "/assets/bts-face-forward-img-9401.webp",
+      "alt": "Musicians performing under a spotlight on the Face Forward set"
+    },
+    {
+      "src": "/assets/bts-face-forward-img-9393.webp",
+      "alt": "Behind the scenes on the Face Forward set"
+    },
+    {
+      "src": "/assets/bts-face-forward-img-9398.webp",
+      "alt": "Lighting and camera setup during the Face Forward shoot"
+    },
+    {
+      "src": "/assets/bts-betterbeings-camera-crew.webp",
+      "alt": "The BetterBeings crew working behind the camera"
+    },
+    {
+      "src": "/assets/bts-betterbeings-set.webp",
+      "alt": "The BetterBeings set between takes"
+    },
+    {
+      "src": "/assets/bts-betterbeings-camera.webp",
+      "alt": "A camera operator prepares a shot on the BetterBeings set"
+    },
+    {
+      "src": "/assets/bts-betterbeings-boom.webp",
+      "alt": "The BetterBeings crew adjusts a boom and camera rig"
+    },
+    {
+      "src": "/assets/bts-betterbeings-crew.webp",
+      "alt": "BetterBeings cast and crew with the camera"
+    },
+    {
+      "src": "/assets/bts-betterbeings-monitor.webp",
+      "alt": "A monitor showing the BetterBeings production in progress"
+    },
+    {
+      "src": "/assets/bts-betterbeings-production.webp",
+      "alt": "The BetterBeings team working through a scene"
+    },
+    {
+      "src": "/assets/bts-betterbeings-slate.webp",
+      "alt": "A BetterBeings cast member holding the production slate"
+    }
+  ]
+}

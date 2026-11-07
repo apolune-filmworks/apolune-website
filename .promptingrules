@@ -1,0 +1,4 @@
+- Tech Stack: Astro + Tailwind CSS
+- Always place Astro components in src/components/ and pages in src/pages/.
+- Do not use client-side React hooks inside plain .astro components unless using client:load.
+- Keep CSS styling utility-first using Tailwind CSS tokens.

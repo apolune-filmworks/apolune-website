@@ -1,0 +1,58 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Topbar from '../../components/Topbar.astro';
+import Footer from '../../components/sections/Footer.astro';
+import ProjectGallery from '../../components/ProjectGallery.astro';
+
+export function getStaticPaths() {
+  const files = import.meta.glob('../../content/projects/*.md', { eager: true });
+  return Object.entries(files).map(([path, project]) => ({
+    params: { slug: path.split('/').pop()!.replace(/\.md$/, '') },
+    props: { project },
+  }));
+}
+const { project } = Astro.props;
+const Content = project.Content;
+const d = project.frontmatter as CollectionEntry<'projects'>['data'];
+const gallery = d.gallery?.length ? d.gallery : d.showcase ? [d.showcase] : [];
+const meta = [d.category, d.status, d.year].filter(Boolean);
+// Preserve existing video embeds, correcting YouTube watch URLs for iframe playback.
+const videoEmbed = (d.videoEmbed || '').replace('youtube.com/watch?v=', 'youtube.com/embed/');
+const embedUrl = (url: string) => url.replace('youtube.com/watch?v=', 'youtube.com/embed/').replace('youtube.com/shorts/', 'youtube.com/embed/').replace('youtu.be/', 'www.youtube.com/embed/');
+---
+<Base title={`${d.title} | Apolune`} description={d.logline || d.description || `${d.title} — an Apolune project.`}>
+  <Topbar />
+  <main>
+    <article class="project-detail">
+      {d.cover && <div class="project-detail-cover"><img src={d.cover} alt={d.coverAlt || d.title} fetchpriority="high" /></div>}
+      <header class="project-detail-header">
+        <h1>{d.title}</h1>
+        {d.subtitle && <p class="project-detail-subtitle">{d.subtitle}</p>}
+        {meta.length > 0 && <div class="project-detail-meta">{meta.map((item) => <p>{item}</p>)}</div>}
+      </header>
+      {(d.logline || d.description) && <section class="project-story" aria-label="About the project">
+        {d.logline && <p class="project-detail-logline">{d.logline}</p>}
+        {d.description && <p class="project-detail-description">{d.description}</p>}
+      </section>}
+      {project.rawContent().trim() && <section class="project-credits" aria-labelledby="project-credits-title">
+        <h2 id="project-credits-title">Credits &amp; Production</h2>
+        <div class="project-credits-copy"><Content /></div>
+      </section>}
+      {videoEmbed && <section class="project-video" aria-label={`${d.title} video`} set:html={videoEmbed} />}
+      {(d.additionalVideos ?? []).map((video) => <section class="project-video project-video-additional" aria-label={video.title}>
+        <h2 class="project-video-title">{video.title}</h2>
+        <div class="project-video-frame"><iframe src={embedUrl(video.url)} title={`${d.title}: ${video.title}`} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      </section>)}
+      {gallery.length > 0 && <ProjectGallery images={gallery} title={d.title} />}
+      {d.pdfAttachment && <div class="project-detail-download"><a class="landing-link" href={d.pdfAttachment} target="_blank" rel="noopener noreferrer">{d.pdfLabel || "VIEW THE LOOKBOOK"}</a></div>}
+      <section class="project-webpage" aria-labelledby="project-webpage-title">
+        <h2 id="project-webpage-title">Explore the Project</h2>
+        {d.webpageUrl
+          ? <iframe src={d.webpageUrl} title={`${d.title} project webpage`} loading="lazy" allowfullscreen></iframe>
+          : <div class="project-webpage-placeholder"><p>More from {d.title} — coming soon.</p></div>}
+      </section>
+    </article>
+  </main>
+  <Footer />
+</Base>

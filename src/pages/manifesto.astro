@@ -1,0 +1,150 @@
+---
+import Base from "../layouts/Base.astro";
+import Topbar from "../components/Topbar.astro";
+import Footer from "../components/sections/Footer.astro";
+import ScrollFade from "../components/ScrollFade.astro";
+import Icon from "../components/Icon.astro";
+import "../styles/manifesto.css";
+import excerpts from "../content/manifesto-excerpts.json";
+const firstStanza = [
+  "I saw a satellite and an aeroplane and all the boats against the current",
+  "Come gathering ’round the ocean to watch the old rocket fly",
+  "At thirty-two hundred kelvin, even God ain’t no deterrent",
+  "For the cosmonaut, the vessel man, who looked up at scary skies",
+];
+const chorus = [
+  "UP TOWARD THE APOLUNE IS WHERE I LIVE OR WHERE I DIE",
+  "BORNE TOWARD THE FAR POINT AND THE GOLDEST OF GOLDEN LIGHT",
+  "OH, LEST I LOSE MY MAGIC OR MY SWEET OLD LULLABYES",
+  "YEAH, ONWARD AND UPWARD, MAN, WHERE I MAKE IT WORTH THE FIGHT",
+];
+const lastStanza = [
+  "said a man who was promised the moon, a most human inheritance",
+  "In silence shrunk down to a thumb-held pound coin",
+  "And in the highest of all stillnesses, he bore the ring of an ancient marriage, since",
+  "every wounded work is what the love of it will anoint",
+  "and join the whole of you and the hurt of you as you touch the sweetest star",
+  "and dwell before the earthrise as evidence of the oldest frame, set, and mark",
+  "catching fading dreams, burning witness to the dark",
+  "and the stories from the far, far point. alas, we can’t help but chase the spark.",
+];
+---
+<Base title="Our Manifesto | Up Toward the Apolune" description="The striving, more than the product, is what counts. Apolune’s manifesto for handmade, literary, imperfect work, centred on a poem by Ansel Tan.">
+  <Topbar />
+  <main class="manifesto">
+    <section class="manifesto-hero" aria-labelledby="manifesto-title">
+      <div class="manifesto-wrap">
+        <div class="manifesto-running-head"><p>APOLUNE / OUR MANIFESTO</p><span>VANCOUVER · EST. 2026</span></div>
+        <div class="manifesto-hero-grid">
+          <div class="manifesto-hero-copy">
+            <p class="manifesto-kicker">FOR THE WONDER OF CREATING.</p>
+            <h1 id="manifesto-title">Up toward<br />the <em>Apolune.</em></h1>
+            <p class="manifesto-hero-intro">To make narrative work with the care of art, not just the efficiency of a product, and to chase great storytelling for nothing but the wonder of creating.</p>
+            <a class="manifesto-read" href="#the-poem">A POEM. A POINT OF DEPARTURE. <Icon name="arrow-right" size={20} /></a>
+          </div>
+          <figure class="manifesto-rocket"><img src="/assets/manifesto/rocket.webp" alt="A spacecraft and rocket on a floodlit launch pad, surrounded by smoke" width="650" height="597" fetchpriority="high" /><figcaption>Ambition, human striving, and the silence just beyond.</figcaption></figure>
+        </div>
+        <div class="manifesto-hero-foot"><span>STORIES FROM THE FAR POINT.</span><a href="#the-far-point">KEEP READING ↓</a></div>
+      </div>
+    </section>
+
+    <section id="the-far-point" class="manifesto-paper manifesto-section" aria-labelledby="far-point-title">
+      <div class="manifesto-wrap manifesto-editorial-grid">
+        <div class="manifesto-margin-note"><span>01 / THE FAR POINT</span><svg viewBox="0 0 260 155" aria-hidden="true"><ellipse cx="112" cy="77" rx="96" ry="33" fill="none" stroke="currentColor" stroke-width="1" transform="rotate(-16 112 77)"/><circle cx="90" cy="77" r="26" fill="currentColor"/><circle cx="207" cy="51" r="5" fill="#bb2932"/><path d="m210 40 15-18" stroke="#bb2932" fill="none"/><text x="173" y="17" fill="currentColor" font-size="10">THE APOLUNE</text></svg></div>
+        <ScrollFade><div class="manifesto-prose">
+          <h2 id="far-point-title">The striving,<br /><em>more than the product,</em><br />is what counts.</h2>
+          <p>Our name is borrowed from astronomy.</p>
+          <figure class="manifesto-definition">
+            <blockquote>“the point in an elliptical orbit around the Moon where a spacecraft or satellite is at its greatest distance from the Moon's center”</blockquote>
+            <figcaption><cite>Definition adapted from <a href="https://www.merriam-webster.com/dictionary/apolune" target="_blank" rel="noopener noreferrer">Merriam-Webster: apolune</a>.</cite></figcaption>
+          </figure>
+          <p>We imagine the APOLUNE to be a place of the cutting-edge. It is the culmination of ambition and human striving — but it is also a place of a sombre, deeply human inheritance. One imagines the Apolune both wondrous and slightly lonely, as fleeting as it is high, a testament to the turn of a life of creation.</p>
+          <p>We believe that to create is to create with the full knowledge that we inhabit the in-between, to accept it anyway, and to have faith that we will continue shooting for the far point, however imperfect.</p>
+        </div></ScrollFade>
+      </div>
+    </section>
+
+    <section id="the-poem" class="manifesto-poem-section manifesto-section" aria-labelledby="poem-title">
+      <div class="manifesto-wrap">
+        <header class="manifesto-poem-heading"><p class="manifesto-kicker">THE POEM AT THE HEART OF IT</p><h2 id="poem-title">UP TOWARD THE APOLUNE</h2><p>By Ansel Tan</p></header>
+        <div class="manifesto-poem">
+          <p class="manifesto-stanza">{firstStanza.map((line) => <span>{line}</span>)}</p>
+          <div class="manifesto-refrain"><p class="manifesto-poem-lead">and said</p><blockquote>{chorus.map((line, i) => <span>{i === 0 ? '‘' : ''}{line}{i === chorus.length - 1 ? '’' : ''}</span>)}</blockquote></div>
+          <p class="manifesto-stanza">{lastStanza.map((line) => <span>{line}</span>)}</p>
+        </div>
+        <p class="manifesto-poem-note">“every wounded work is what the love of it will anoint”</p>
+      </div>
+    </section>
+
+    <section class="manifesto-art-spread manifesto-paper" aria-label="Concept paintings from Apolune’s creative world">
+      <figure><img src="/assets/manifesto/the-journey.webp" alt="Two people facing each other in a warmly lit train carriage, with mountains beyond the window" width="1600" height="785" loading="lazy" /><figcaption>“said a man who was promised the moon, a most human inheritance”</figcaption></figure>
+      <figure><img src="/assets/manifesto/the-sky.webp" alt="A painted figure resting on a green hillside beneath a blue sky and passing aircraft" width="1600" height="1084" loading="lazy" /><figcaption>“and join the whole of you and the hurt of you as you touch the sweetest star”</figcaption></figure>
+    </section>
+
+    <section class="manifesto-making manifesto-section" aria-labelledby="making-title">
+      <div class="manifesto-wrap manifesto-editorial-grid">
+        <p class="manifesto-margin-note">02 / THE WORK OF OUR HANDS</p>
+        <ScrollFade><div class="manifesto-prose">
+          <h2 id="making-title">Handmade.<br />Literary.<br /><em>Imperfect.</em></h2>
+          <p>Apolune is a Vancouver-based production house and creative collective dedicated to telling STORIES FROM THE FAR POINT. We began with a simple goal: to make narrative work with the care of art, not just the efficiency of a product, and to chase great storytelling for nothing but the wonder of creating. Over time, that has grown into a vision that includes our own slate of narrative films, commercials, and music videos.</p>
+          <p>We believe in preserving the handmade, literary, poetic, and ultimately imperfect nature of our work.</p>
+        </div></ScrollFade>
+      </div>
+    </section>
+
+    <section class="manifesto-machine manifesto-section" aria-labelledby="machine-title">
+      <div class="manifesto-wrap manifesto-machine-grid">
+        <p class="manifesto-margin-note">FROM <em>LAMENT FOR THE MACHINE</em><br />ANSEL TAN</p>
+        <h2 id="machine-title" class="manifesto-machine-heading">The creator’s<br /><em>dream.</em></h2>
+        <div class="manifesto-machine-copy">
+          <blockquote class="manifesto-machine-excerpts"><p>{excerpts.real}</p><p>{excerpts.tools}</p></blockquote>
+          <p class="manifesto-emphasis">{excerpts.dream}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="manifesto-risk manifesto-paper manifesto-section" aria-labelledby="risk-title">
+      <div class="manifesto-wrap">
+        <p class="manifesto-kicker">FROM <em>LAMENT FOR THE MACHINE</em> · ANSEL TAN</p>
+        <h2 id="risk-title" class="manifesto-risk-heading">The distance was never<br /><em>made of resolution.</em></h2>
+        <blockquote class="manifesto-risk-quote manifesto-risk-excerpt">“{excerpts.risk}”</blockquote>
+      </div>
+    </section>
+
+    <section class="manifesto-belief manifesto-section" aria-labelledby="belief-title">
+      <div class="manifesto-wrap manifesto-belief-grid">
+        <figure class="manifesto-bellwood"><img src="/assets/the-angel-liberty.webp" alt="A painted angel reaching toward a paper airplane among roses and a red-lit sky" width="1672" height="941" loading="lazy" /><figcaption>The spirit of St. Bellwood.</figcaption></figure>
+        <ScrollFade><div class="manifesto-prose">
+          <p class="manifesto-kicker">03 / A LITTLE FAITH</p>
+          <h2 id="belief-title">She tries<br /><em>regardless.</em></h2>
+          <p>Our angel is an epigraph of a fictional character called St. Bellwood, from one of our original pieces.</p>
+          <p>From a field of plasticine roses, cast in the light of a neon television, Bellwood works tirelessly to build cardboard wings for herself to fly.</p>
+          <p>Her belief in her ability exceeds even her capacity to succeed. But she tries regardless.</p>
+          <p>So we carry on the way you’d carry a candle across a windy field: one hand cupped around the flame, knowing it might go out, walking anyway. We cast the bell without knowing whether it will ring, and we wait to hear.</p>
+          <p class="manifesto-emphasis">That’s what we call FAITH ... that it’s worth the walking.</p>
+        </div></ScrollFade>
+      </div>
+    </section>
+
+    <section class="manifesto-together" aria-labelledby="together-title">
+      <img class="manifesto-coast" src="/assets/manifesto/the-long-road.webp" alt="Two figures on a painted coast looking toward a church above the cliffs" width="1600" height="1128" loading="lazy" />
+      <div class="manifesto-together-copy manifesto-wrap">
+        <p class="manifesto-kicker">04 / NEVER VERY FAR FROM EACH OTHER</p>
+        <h2 id="together-title">A borrowed light.<br />A crew of friends<br /><em>who said yes.</em></h2>
+        <p>When we’re not working on our in-house productions, we act as an end-to-end production service helping clients and creatives around the world bring their stories to life. We also host community events like the Apolune Film Festival to bring storytellers together in-person, because we know first-hand that the best work rarely gets made alone.</p>
+        <p>Every collaboration starts with someone saying “I loved your film. What are you making next?”</p>
+      </div>
+    </section>
+
+    <section class="manifesto-close manifesto-section">
+      <div class="manifesto-wrap">
+        <p class="manifesto-kicker">ONWARD AND UPWARD, MAN.</p>
+        <h2>We can’t help<br /><em>but chase the spark.</em></h2>
+        <p>The FAR POINT is where that faith lives: past the budget, past the odds, past anyone’s permission, out where the work is its own reason.</p>
+        <div class="manifesto-actions"><a class="landing-link" href="mailto:hello@apolune.net">MAKE SOMETHING WITH US <Icon name="arrow-up-right" /></a><a class="landing-link" href="/#hero">EXPLORE OUR WORK <Icon name="arrow-right" /></a><a class="landing-link" href="/film-festival">THE FILM FESTIVAL <Icon name="arrow-right" /></a></div>
+        <p class="manifesto-sources">Poem and selected excerpts by Ansel Tan. From <em>UP TOWARD THE APOLUNE</em>, <em>Lament for the Machine</em>, and Apolune’s founding vision.</p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>

@@ -1,0 +1,155 @@
+---
+import Base from "../layouts/Base.astro";
+import Topbar from "../components/Topbar.astro";
+import Footer from "../components/sections/Footer.astro";
+import ScrollFade from "../components/ScrollFade.astro";
+import Icon from "../components/Icon.astro";
+import FestivalBooking from "../components/FestivalBooking.astro";
+import "../styles/festival.css";
+const assets = "/assets/festival/";
+const community = [
+  { title: "See each other’s work.", text: "On the big screen, with a real audience." },
+  { title: "Meet each other.", text: "The writers, directors, DPs, editors, and composers working ten minutes from you, in the same room." },
+  { title: "Leave with a crew.", text: "Every collaboration starts with someone saying ‘I loved your film. What are you making next?’" },
+];
+const workshops = [
+  { title: "Learn.", text: "Eight workshops taught by working Vancouver filmmakers, covering screenwriting, directing, cinematography, production design, sound, and post-production." },
+  { title: "Make.", text: "Teams write their scripts, shoot on phones and shared equipment from Apolune and our sponsors, and edit their films to delivery." },
+  { title: "Show.", text: "Their films screen free at the Norm Theatre for the cohort and their guests. Every participant then gets a free waiver to submit to APLFF." },
+];
+const support = [
+  { title: "The filmmakers.", text: "Audio, lighting, grip, and workshop materials for the Crash Test Cinema cohort, so first-time filmmakers aren’t limited by what they own." },
+  { title: "The night.", text: "The theatre, projection, crew, food for the room, and raffle prizes worth showing up for." },
+  { title: "What comes next.", text: "Festival proceeds go toward CONTRADANCE, Apolune’s first in-house feature." },
+];
+---
+<Base title="Apolune Film Festival | March 20–21, 2027 · Vancouver" description="Two days celebrating Vancouver’s independent filmmakers. Join the first Apolune Film Festival, March 20–21, 2027, at the Normand Bouchard Memorial Theatre, UBC.">
+  <Topbar />
+  <main class="festival">
+    <section class="festival-hero festival-paper" aria-labelledby="festival-title">
+      <div class="festival-hero-art">
+        <img class="festival-cover-art" src={`${assets}hero.webp`} alt="A filmmaker in a red cape projects a rocket toward a red moon through a painted starry sky" fetchpriority="high" width="1664" height="941" />
+        <div class="festival-hero-shade" aria-hidden="true"></div>
+        <div class="festival-hero-copy">
+          <p class="festival-eyebrow">VANCOUVER · MARCH 20–21, 2027</p>
+          <h1 id="festival-title"><span class="festival-apolune">Apolune</span><span class="festival-name">FILM FESTIVAL.</span></h1>
+          <p class="festival-volume">vol. 1: STORIES FROM THE FAR POINT</p>
+          <div class="festival-venue"><p>Normand Bouchard Memorial Theatre</p><p>University of British Columbia, Vancouver</p></div>
+          <div class="festival-actions">
+            <a class="festival-button" href="#festival-weekend">EXPLORE THE WEEKEND <Icon name="arrow-right" /></a>
+            <a class="festival-button festival-button-outline" href="#festival-support">BECOME A SUPPORTER</a>
+            <a class="festival-button" href="https://luma.com/u5plobdz" target="_blank" rel="noopener noreferrer">GET TICKETS <Icon name="arrow-up-right" /></a>
+          </div>
+          <FestivalBooking showTickets={false} />
+        </div>
+        <span class="festival-hero-edition">THE FIRST APOLUNE FILM FESTIVAL<br />A ROOM FOR STORIES WORTH TELLING.</span>
+      </div>
+    </section>
+
+    <div class="festival-facts"><p><span>WHEN</span>March 20–21, 2027</p><p><span>WHERE</span>The Norm Theatre · UBC</p><p><span>WHY</span>Stories worth telling.</p></div>
+
+    <section class="festival-mission festival-photo-section" aria-labelledby="festival-mission-title">
+      <img class="festival-section-art" src={`${assets}far-point.webp`} alt="" loading="lazy" />
+      <div class="festival-shade" aria-hidden="true"></div>
+      <div class="festival-wrap festival-mission-grid">
+        <ScrollFade><h2 id="festival-mission-title" class="festival-big-heading"><span>Stories from the</span>FAR POINT.</h2></ScrollFade>
+        <ScrollFade><div class="festival-prose festival-manifesto">
+          <p class="festival-lead">Nobody asked us to make these films.</p>
+          <p>No one is waiting for them. No one has promised they’ll be finished, or seen, or that they’ll matter to anyone but us. And still we can’t not make them.</p>
+          <p>We make them because they are stories worth telling.</p>
+          <p>So we carry on the way you’d carry a candle across a windy field: one hand cupped around the flame, knowing it might go out, walking anyway. We cast the bell without knowing whether it will ring, and we wait to hear.</p>
+          <p>A borrowed light. A crew of friends who said yes. Whatever equipment we’ve got.</p>
+          <p>That’s what we call <strong>FAITH</strong> ... that it’s worth the walking.</p>
+          <p>The <strong>FAR POINT</strong> is where that faith lives: past the budget, past the odds, past anyone’s permission, out where the work is its own reason.</p>
+          <p>This festival is for the people who live out there.</p>
+          <p class="festival-lead">Bring us your bell. We’ll be listening.</p>
+        </div></ScrollFade>
+      </div>
+    </section>
+
+    <section class="festival-welcome festival-space">
+      <div class="festival-wrap festival-split">
+        <ScrollFade><div class="festival-photo-stack"><img src="/assets/apolune-team.webp" alt="The Apolune cast and crew together on set" loading="lazy" width="1920" height="1080" /><p class="festival-photo-caption">A crew of friends who said yes.</p></div></ScrollFade>
+        <ScrollFade><div class="festival-prose">
+          <p class="festival-eyebrow">MADE HERE. TOGETHER.</p>
+          <h2 class="festival-heading">Welcome to the<br /><em>first-ever</em> Apolune Film Festival.</h2>
+          <p>Apolune is a Vancouver production house and creative collective founded by local indie filmmakers Ansel Tan and Britney Kam.</p>
+          <p>We know first-hand how much talent this city holds, because we’re building our careers here, making movies alongside the people who live and work in it.</p>
+          <p>Vancouver needs more events built for independent filmmakers. So we thought: what better way to stoke community than to start one ourselves?</p>
+          <p class="festival-handwritten">How hard can it be?!</p>
+        </div></ScrollFade>
+      </div>
+    </section>
+
+    <section class="festival-community festival-photo-section" aria-labelledby="community-title">
+      <img class="festival-section-art" src={`${assets}launch-community.webp`} alt="People watching a rocket launch across the water at dusk" loading="lazy" />
+      <div class="festival-shade" aria-hidden="true"></div>
+      <div class="festival-wrap">
+        <ScrollFade><h2 id="community-title" class="festival-big-heading"><span>A celebration of Vancouver’s</span>INDIE FILMMAKERS...</h2></ScrollFade>
+        <p class="festival-community-intro">Most of us have spent years making films alone. Few of us have seen each other’s work. Whether you’re emerging or seasoned, this is your room.</p>
+        <div class="festival-three-col">{community.map((item, i) => <ScrollFade><div class="festival-numbered"><span class="festival-number">0{i + 1}</span><h3>{item.title}</h3><p>{item.text}</p></div></ScrollFade>)}</div>
+        <p class="festival-community-close">The whole range of Vancouver’s independent film community, in one room, celebrating each other. <strong>TOGETHER.</strong></p>
+      </div>
+    </section>
+
+    <section class="festival-crash festival-photo-section" aria-labelledby="crash-title">
+      <img class="festival-section-art" src={`${assets}rocket.webp`} alt="" loading="lazy" />
+      <div class="festival-shade" aria-hidden="true"></div>
+      <div class="festival-wrap">
+        <ScrollFade><h2 id="crash-title" class="festival-big-heading"><span>...and those just setting out.</span>CRASH TEST CINEMA.</h2></ScrollFade>
+        <div class="festival-crash-photos"><ScrollFade><img src={`${assets}workshop.webp`} alt="First-time filmmakers collaborating at a workshop" loading="lazy" /></ScrollFade><ScrollFade><img src={`${assets}screening.webp`} alt="A community film screening and gathering" loading="lazy" /></ScrollFade></div>
+        <div class="festival-crash-intro festival-prose"><p>Every January, CiTR 101.9FM, UBC’s campus radio station, runs <strong>CRASH TEST CINEMA</strong>: a low-barrier-access film programme taking first-time UBC filmmakers from a blank page to a finished film.</p><p>This year, Apolune is the programme’s mentorship and equipment sponsor.</p></div>
+        <div class="festival-three-col">{workshops.map((item, i) => <ScrollFade><div class="festival-numbered"><span class="festival-number">0{i + 1}</span><h3>{item.title}</h3><p>{item.text}</p></div></ScrollFade>)}</div>
+        <p class="festival-community-close">A first film beside a tenth film, in the same room, in front of the same audience.</p>
+      </div>
+    </section>
+
+    <section id="festival-weekend" class="festival-weekend festival-photo-section" aria-labelledby="weekend-title">
+      <img class="festival-section-art" src={`${assets}rainbow-space.webp`} alt="" loading="lazy" />
+      <div class="festival-shade" aria-hidden="true"></div>
+      <div class="festival-wrap">
+        <ScrollFade><h2 id="weekend-title" class="festival-big-heading"><span>Two whole days celebrating</span>STORIES FROM<br />THE FAR POINT.</h2></ScrollFade>
+        <div class="festival-split festival-weekend-details">
+          <ScrollFade><figure><img src={`${assets}cinema-crew.webp`} alt="Filmmakers beneath the Norm Theatre’s Crash Test Cinema marquee" loading="lazy" /><figcaption>From the community that brought us here.</figcaption></figure></ScrollFade>
+          <ScrollFade><div class="festival-prose"><p class="festival-lead">This March, everyone comes together.</p><p>First-time filmmakers’ films hit the big screen. Local indie filmmakers show their work beside them. Then comes a raffle, food, and a social.</p><p>The weekend ends with the premiere of <a href="/projects/the-angel-liberty">THE ANGEL LIBERTY</a>, the proof-of-concept short for Apolune’s first in-house feature, <a href="/projects/contradance">CONTRADANCE</a>.</p><p>Every dollar raised at the festival goes toward making <strong>CONTRADANCE</strong> a reality.</p></div></ScrollFade>
+        </div>
+        <FestivalBooking />
+      </div>
+    </section>
+
+    <section id="festival-support" class="festival-support festival-photo-section" aria-labelledby="support-title">
+      <img class="festival-section-art" src={`${assets}far-point.webp`} alt="" loading="lazy" />
+      <div class="festival-shade" aria-hidden="true"></div>
+      <div class="festival-wrap">
+        <ScrollFade><h2 id="support-title" class="festival-big-heading"><span>But, we need</span>YOUR HELP!</h2></ScrollFade>
+        <p class="festival-support-intro">We have the faith, the films, and the people. We don’t have the budget. Everything we raise goes back into the night, the cohort, and the feature.</p>
+        <div class="festival-three-col">{support.map((item, i) => <ScrollFade><div class="festival-numbered"><span class="festival-number">0{i + 1}</span><h3>{item.title}</h3><p>{item.text}</p></div></ScrollFade>)}</div>
+        <div class="festival-ways"><p class="festival-eyebrow">WAYS TO GIVE</p><p>Cash sponsorship. Gear and services. Raffle prizes.</p><span>Equipment, printing, design, catering, or something worth winning. Every contribution puts a film on the screen.</span></div>
+        <div class="festival-actions"><a class="festival-button" href="mailto:hello@apolune.net?subject=APLFF%20Sponsorship">LET’S MAKE IT HAPPEN <Icon name="arrow-up-right" /></a><a class="festival-button festival-button-outline" href={`${assets}APLFF-Sponsor-Pitch-Deck.pdf`} target="_blank" rel="noopener noreferrer">READ THE SPONSOR DECK <Icon name="arrow-up-right" /></a></div>
+      </div>
+    </section>
+
+    <section class="festival-benefits festival-paper" aria-labelledby="benefits-title">
+      <div class="festival-wrap">
+        <p class="festival-eyebrow">FOR THE PEOPLE WHO MAKE IT POSSIBLE</p>
+        <h2 id="benefits-title">Your name beside<br /><em>the work of a city.</em></h2>
+        <p class="festival-benefits-intro">In front of the people who care about it.</p>
+        <div class="festival-benefits-grid">
+          <div><h3>From CiTR 101.9FM...</h3><p><strong>Radio ads.</strong> Your business on UBC’s campus radio, a Vancouver institution with over 14,000 monthly listeners.</p><p><strong>Print ads.</strong> Your name in CiTR’s famed <em>Discorder Magazine.</em></p></div>
+          <div><h3>From Apolune...</h3><p><strong>Your branding.</strong> Across festival materials, our socials, and the screen before every film.</p><p><strong>Time to speak.</strong> A moment to tell the room about your business.</p><p><strong>A post on our socials.</strong> Plus acknowledgement on our channels for as long as the festival runs.</p></div>
+          <div><h3>In the room...</h3><p>A night with filmmakers, students, and audiences who are there because they care about local art.</p><p>A place in the story of a Vancouver feature film from the beginning.</p></div>
+        </div>
+        <a class="festival-button festival-button-ink" href="mailto:hello@apolune.net?subject=APLFF%20Partnership">PARTNER WITH US <Icon name="arrow-up-right" /></a>
+      </div>
+    </section>
+
+    <section class="festival-organisers festival-space" aria-labelledby="organisers-title">
+      <div class="festival-wrap"><h2 id="organisers-title" class="festival-eyebrow">AN EVENT BY</h2><div class="festival-organiser-logos"><a href="/" aria-label="Apolune"><img src="/assets/apolune-emblem.webp" alt="Apolune" loading="lazy" /><span>Apolune.</span></a><div><img src={`${assets}indievision.webp`} alt="Indievision" loading="lazy" /></div><div><img src={`${assets}citr.webp`} alt="CiTR 101.9FM" loading="lazy" /></div></div></div>
+    </section>
+
+    <section class="festival-thanks festival-paper">
+      <div class="festival-thanks-art"><img src={`${assets}hero.webp`} alt="" loading="lazy" /><div class="festival-thanks-copy"><h2>THANK YOU.</h2><p>For making our dreams<br />come true. :)</p><a class="festival-button" href="mailto:hello@apolune.net">SAY HELLO <Icon name="arrow-up-right" /></a></div></div>
+    </section>
+  </main>
+  <Footer />
+</Base>
