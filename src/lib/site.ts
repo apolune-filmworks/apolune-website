@@ -1,6 +1,8 @@
 import data from "../content/site.json";
 
-export const site = data;
+import { resolveContentUrls } from "./urls";
+
+export const site = resolveContentUrls(data);
 
 /** Projects in display order, used by the carousel and the case study pages. */
 export async function getProjects() {
@@ -18,7 +20,7 @@ export async function getProjects() {
     };
   }>("../content/projects/*.md", { eager: true });
   return Object.entries(files)
-    .map(([path, file]) => ({ id: path.split("/").pop()!.replace(/\.md$/, ""), data: file.frontmatter }))
+    .map(([path, file]) => ({ id: path.split("/").pop()!.replace(/\.md$/, ""), data: resolveContentUrls(file.frontmatter) }))
     .filter((project) => project.data.library !== false)
     .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 }

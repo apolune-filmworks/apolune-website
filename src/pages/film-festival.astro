@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../lib/urls";
 import Base from "../layouts/Base.astro";
 import Topbar from "../components/Topbar.astro";
 import Footer from "../components/sections/Footer.astro";
@@ -6,7 +7,7 @@ import ScrollFade from "../components/ScrollFade.astro";
 import Icon from "../components/Icon.astro";
 import FestivalBooking from "../components/FestivalBooking.astro";
 import "../styles/festival.css";
-const assets = "/assets/festival/";
+const assets = withBase("/assets/festival/");
 const community = [
   { title: "See each other’s work.", text: "On the big screen, with a real audience." },
   { title: "Meet each other.", text: "The writers, directors, DPs, editors, and composers working ten minutes from you, in the same room." },
@@ -69,7 +70,7 @@ const support = [
 
     <section class="festival-welcome festival-space">
       <div class="festival-wrap festival-split">
-        <ScrollFade><div class="festival-photo-stack"><img src="/assets/apolune-team.webp" alt="The Apolune cast and crew together on set" loading="lazy" width="1920" height="1080" /><p class="festival-photo-caption">A crew of friends who said yes.</p></div></ScrollFade>
+        <ScrollFade><div class="festival-photo-stack"><img src={withBase("/assets/apolune-team.webp")} alt="The Apolune cast and crew together on set" loading="lazy" width="1920" height="1080" /><p class="festival-photo-caption">A crew of friends who said yes.</p></div></ScrollFade>
         <ScrollFade><div class="festival-prose">
           <p class="festival-eyebrow">MADE HERE. TOGETHER.</p>
           <h2 class="festival-heading">Welcome to the<br /><em>first-ever</em> Apolune Film Festival.</h2>
@@ -111,7 +112,7 @@ const support = [
         <ScrollFade><h2 id="weekend-title" class="festival-big-heading"><span>Two whole days celebrating</span>STORIES FROM<br />THE FAR POINT.</h2></ScrollFade>
         <div class="festival-split festival-weekend-details">
           <ScrollFade><figure><img src={`${assets}cinema-crew.webp`} alt="Filmmakers beneath the Norm Theatre’s Crash Test Cinema marquee" loading="lazy" /><figcaption>From the community that brought us here.</figcaption></figure></ScrollFade>
-          <ScrollFade><div class="festival-prose"><p class="festival-lead">This March, everyone comes together.</p><p>First-time filmmakers’ films hit the big screen. Local indie filmmakers show their work beside them. Then comes a raffle, food, and a social.</p><p>The weekend ends with the premiere of <a href="/projects/the-angel-liberty">THE ANGEL LIBERTY</a>, the proof-of-concept short for Apolune’s first in-house feature, <a href="/projects/contradance">CONTRADANCE</a>.</p><p>Every dollar raised at the festival goes toward making <strong>CONTRADANCE</strong> a reality.</p></div></ScrollFade>
+          <ScrollFade><div class="festival-prose"><p class="festival-lead">This March, everyone comes together.</p><p>First-time filmmakers’ films hit the big screen. Local indie filmmakers show their work beside them. Then comes a raffle, food, and a social.</p><p>The weekend ends with the premiere of <a href={withBase("/projects/the-angel-liberty")} >THE ANGEL LIBERTY</a>, the proof-of-concept short for Apolune’s first in-house feature, <a href={withBase("/projects/contradance")} >CONTRADANCE</a>.</p><p>Every dollar raised at the festival goes toward making <strong>CONTRADANCE</strong> a reality.</p></div></ScrollFade>
         </div>
         <FestivalBooking />
       </div>
@@ -144,7 +145,7 @@ const support = [
     </section>
 
     <section class="festival-organisers festival-space" aria-labelledby="organisers-title">
-      <div class="festival-wrap"><h2 id="organisers-title" class="festival-eyebrow">AN EVENT BY</h2><div class="festival-organiser-logos"><a href="/" aria-label="Apolune"><img src="/assets/apolune-emblem.webp" alt="Apolune" loading="lazy" /><span>Apolune.</span></a><div><img src={`${assets}indievision.webp`} alt="Indievision" loading="lazy" /></div><div><img src={`${assets}citr.webp`} alt="CiTR 101.9FM" loading="lazy" /></div></div></div>
+      <div class="festival-wrap"><h2 id="organisers-title" class="festival-eyebrow">AN EVENT BY</h2><div class="festival-organiser-logos"><a href={withBase("/")} aria-label="Apolune"><img src={withBase("/assets/apolune-emblem.webp")} alt="Apolune" loading="lazy" /><span>Apolune.</span></a><div><img src={`${assets}indievision.webp`} alt="Indievision" loading="lazy" /></div><div><img src={`${assets}citr.webp`} alt="CiTR 101.9FM" loading="lazy" /></div></div></div>
     </section>
 
     <section class="festival-thanks festival-paper">

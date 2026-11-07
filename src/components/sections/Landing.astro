@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../../lib/urls";
 import { site } from "../../lib/site";
 
 const landing = site?.landing ?? {};
@@ -10,9 +11,9 @@ const posterAlt = landing.posterAlt ?? "Apolune landing background";
   <div class="intro-space">
   <div class="intro-stars"></div>
   <video class="intro-film" data-intro-film muted loop playsinline preload="auto" aria-hidden="true">
-    <source src="/assets/intro-orbit-cropped.mp4" type="video/mp4" />
+    <source src={withBase("/assets/intro-orbit-cropped.mp4")} type="video/mp4" />
   </video>
-  <img class="landing-intro-logo" src="/assets/angel-black.webp" alt="" width="400" height="525" />
+  <img class="landing-intro-logo" src={withBase("/assets/angel-black.webp")} alt="" width="400" height="525" />
   <div class="landing-grain intro-grain"></div>
   </div>
 </div>
@@ -34,13 +35,13 @@ const posterAlt = landing.posterAlt ?? "Apolune landing background";
   <div class="landing-scrim"></div>
   <div class="landing-copy">
     <div class="landing-logo-frame">
-      <img class="landing-logo" src="/assets/apolune-emblem.webp" alt="Apolune emblem" width="1254" height="1254" />
+      <img class="landing-logo" src={withBase("/assets/apolune-emblem.webp")} alt="Apolune emblem" width="1254" height="1254" />
     </div>
     <h1 class="h1 landing-name" data-text={site?.name}>{site?.name}</h1>
     <div class="landing-links" role="group" aria-label="Explore Apolune">
       {["APOLUNE ORIGINAL FILMS", "COMMERCIAL / VIDEO WORK", "PHOTOGRAPHY", "WRITING", "EVENTS", "ABOUT US / OUR MANIFESTO"].map((label) => (
         label === "ABOUT US / OUR MANIFESTO"
-          ? <a class="landing-link" href="/manifesto">{label}</a>
+          ? <a class="landing-link" href={withBase("/manifesto")} >{label}</a>
           : <button class="landing-link" type="button">{label}</button>
       ))}
     </div>

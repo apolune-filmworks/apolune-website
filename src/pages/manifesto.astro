@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../lib/urls";
 import Base from "../layouts/Base.astro";
 import Topbar from "../components/Topbar.astro";
 import Footer from "../components/sections/Footer.astro";
@@ -42,7 +43,7 @@ const lastStanza = [
             <p class="manifesto-hero-intro">To make narrative work with the care of art, not just the efficiency of a product, and to chase great storytelling for nothing but the wonder of creating.</p>
             <a class="manifesto-read" href="#the-poem">A POEM. A POINT OF DEPARTURE. <Icon name="arrow-right" size={20} /></a>
           </div>
-          <figure class="manifesto-rocket"><img src="/assets/manifesto/rocket.webp" alt="A spacecraft and rocket on a floodlit launch pad, surrounded by smoke" width="650" height="597" fetchpriority="high" /><figcaption>Ambition, human striving, and the silence just beyond.</figcaption></figure>
+          <figure class="manifesto-rocket"><img src={withBase("/assets/manifesto/rocket.webp")} alt="A spacecraft and rocket on a floodlit launch pad, surrounded by smoke" width="650" height="597" fetchpriority="high" /><figcaption>Ambition, human striving, and the silence just beyond.</figcaption></figure>
         </div>
         <div class="manifesto-hero-foot"><span>STORIES FROM THE FAR POINT.</span><a href="#the-far-point">KEEP READING ↓</a></div>
       </div>
@@ -77,8 +78,8 @@ const lastStanza = [
     </section>
 
     <section class="manifesto-art-spread manifesto-paper" aria-label="Concept paintings from Apolune’s creative world">
-      <figure><img src="/assets/manifesto/the-journey.webp" alt="Two people facing each other in a warmly lit train carriage, with mountains beyond the window" width="1600" height="785" loading="lazy" /><figcaption>“said a man who was promised the moon, a most human inheritance”</figcaption></figure>
-      <figure><img src="/assets/manifesto/the-sky.webp" alt="A painted figure resting on a green hillside beneath a blue sky and passing aircraft" width="1600" height="1084" loading="lazy" /><figcaption>“and join the whole of you and the hurt of you as you touch the sweetest star”</figcaption></figure>
+      <figure><img src={withBase("/assets/manifesto/the-journey.webp")} alt="Two people facing each other in a warmly lit train carriage, with mountains beyond the window" width="1600" height="785" loading="lazy" /><figcaption>“said a man who was promised the moon, a most human inheritance”</figcaption></figure>
+      <figure><img src={withBase("/assets/manifesto/the-sky.webp")} alt="A painted figure resting on a green hillside beneath a blue sky and passing aircraft" width="1600" height="1084" loading="lazy" /><figcaption>“and join the whole of you and the hurt of you as you touch the sweetest star”</figcaption></figure>
     </section>
 
     <section class="manifesto-making manifesto-section" aria-labelledby="making-title">
@@ -113,7 +114,7 @@ const lastStanza = [
 
     <section class="manifesto-belief manifesto-section" aria-labelledby="belief-title">
       <div class="manifesto-wrap manifesto-belief-grid">
-        <figure class="manifesto-bellwood"><img src="/assets/the-angel-liberty.webp" alt="A painted angel reaching toward a paper airplane among roses and a red-lit sky" width="1672" height="941" loading="lazy" /><figcaption>The spirit of St. Bellwood.</figcaption></figure>
+        <figure class="manifesto-bellwood"><img src={withBase("/assets/the-angel-liberty.webp")} alt="A painted angel reaching toward a paper airplane among roses and a red-lit sky" width="1672" height="941" loading="lazy" /><figcaption>The spirit of St. Bellwood.</figcaption></figure>
         <ScrollFade><div class="manifesto-prose">
           <p class="manifesto-kicker">03 / A LITTLE FAITH</p>
           <h2 id="belief-title">She tries<br /><em>regardless.</em></h2>
@@ -127,7 +128,7 @@ const lastStanza = [
     </section>
 
     <section class="manifesto-together" aria-labelledby="together-title">
-      <img class="manifesto-coast" src="/assets/manifesto/the-long-road.webp" alt="Two figures on a painted coast looking toward a church above the cliffs" width="1600" height="1128" loading="lazy" />
+      <img class="manifesto-coast" src={withBase("/assets/manifesto/the-long-road.webp")} alt="Two figures on a painted coast looking toward a church above the cliffs" width="1600" height="1128" loading="lazy" />
       <div class="manifesto-together-copy manifesto-wrap">
         <p class="manifesto-kicker">04 / NEVER VERY FAR FROM EACH OTHER</p>
         <h2 id="together-title">A borrowed light.<br />A crew of friends<br /><em>who said yes.</em></h2>
@@ -141,7 +142,7 @@ const lastStanza = [
         <p class="manifesto-kicker">ONWARD AND UPWARD, MAN.</p>
         <h2>We can’t help<br /><em>but chase the spark.</em></h2>
         <p>The FAR POINT is where that faith lives: past the budget, past the odds, past anyone’s permission, out where the work is its own reason.</p>
-        <div class="manifesto-actions"><a class="landing-link" href="mailto:hello@apolune.net">MAKE SOMETHING WITH US <Icon name="arrow-up-right" /></a><a class="landing-link" href="/#hero">EXPLORE OUR WORK <Icon name="arrow-right" /></a><a class="landing-link" href="/film-festival">THE FILM FESTIVAL <Icon name="arrow-right" /></a></div>
+        <div class="manifesto-actions"><a class="landing-link" href="mailto:hello@apolune.net">MAKE SOMETHING WITH US <Icon name="arrow-up-right" /></a><a class="landing-link" href={withBase("/#hero")} >EXPLORE OUR WORK <Icon name="arrow-right" /></a><a class="landing-link" href={withBase("/film-festival")} >THE FILM FESTIVAL <Icon name="arrow-right" /></a></div>
         <p class="manifesto-sources">Poem and selected excerpts by Ansel Tan. From <em>UP TOWARD THE APOLUNE</em>, <em>Lament for the Machine</em>, and Apolune’s founding vision.</p>
       </div>
     </section>

@@ -1,14 +1,15 @@
 ---
+import { withBase } from "../lib/urls";
 import { site } from "../lib/site";
 import Icon from "./Icon.astro";
 // The link for the current page is white, the rest sit at 60% (Framer current-page link style).
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
-const isCurrent = (href: string) => href === path;
+const isCurrent = (href: string) => (href.replace(/\/$/, "") || "/") === path;
 ---
 <header class="topbar" data-topbar>
   <div class="topbar-bar container">
-    <a href="/" class="topbar-logo" aria-label="Apolune — Home">
-      <img class="topbar-emblem" src="/assets/apolune-monochrome.webp" alt="" width="1254" height="1254" />
+    <a href={withBase("/")} class="topbar-logo" aria-label="Apolune — Home">
+      <img class="topbar-emblem" src={withBase("/assets/apolune-monochrome.webp")} alt="" width="1254" height="1254" />
       <span class="topbar-brand-copy">
         <span class="topbar-brand-name">Apolune</span>
         <span class="topbar-brand-tagline">STORIES FROM THE FAR POINT</span>

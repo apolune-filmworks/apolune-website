@@ -1,4 +1,5 @@
 ---
+import { withBase } from "../../lib/urls";
 import { getProjects } from "../../lib/site";
 import Icon from "../Icon.astro";
 import ScrollFade from "../ScrollFade.astro";
@@ -11,7 +12,7 @@ const projects = await getProjects();
   <div class="project-library-grid">
     {projects.map((project) => (
       <ScrollFade>
-      <a class="upcoming-card library-card" href={`/projects/${project.id}`} aria-label={`Explore ${project.data.title}`}>
+      <a class="upcoming-card library-card" href={withBase(`/projects/${project.id}`)} aria-label={`Explore ${project.data.title}`}>
         <img class="upcoming-image" src={project.data.libraryCover || project.data.cover} alt={project.data.libraryCoverAlt || project.data.coverAlt || project.data.title} loading="lazy" />
         <div class="upcoming-copy">
           <h3 class="upcoming-title library-title">{project.data.title}</h3>
