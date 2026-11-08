@@ -1,0 +1,22 @@
+---
+import Work from "../layouts/Work.astro";
+import ProjectCards from "../components/ProjectCards.astro";
+import { getProjects, isOriginalFilm } from "../lib/site";
+import { withBase } from "../lib/urls";
+const featured = ["contradance", "the-angel-liberty"];
+const projects = (await getProjects({ include: [...featured, "live-free-or-die", "say-less", "give-it-a-listen"] }))
+  .filter(isOriginalFilm)
+  .sort((a, b) => {
+    const rank = (id: string) => featured.includes(id) ? featured.indexOf(id) : featured.length;
+    return rank(a.id) - rank(b.id);
+  });
+---
+<Work title="APOLUNE ORIGINAL FILMS" description="Original narrative films and documentaries from Apolune. Explore the stories and the projects behind them.">
+  <header class="work-heading work-wrap">
+    <a class="work-eyebrow" href={withBase("/film-video")}>APOLUNE / FILM &amp; VIDEO</a>
+    <h1>APOLUNE ORIGINAL FILMS</h1>
+  </header>
+  <section class="project-library" aria-label="APOLUNE ORIGINAL FILMS projects">
+    <ProjectCards projects={projects} />
+  </section>
+</Work>

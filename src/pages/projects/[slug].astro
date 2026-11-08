@@ -41,6 +41,11 @@ const embedUrl = (url: string) => url.replace('youtube.com/watch?v=', 'youtube.c
         <div class="project-credits-copy"><Content /></div>
       </section>}
       {videoEmbed && <section class="project-video" aria-label={`${d.title} video`} set:html={videoEmbed} />}
+      {d.videoPlaylistUrl && <section class="project-story" aria-labelledby="project-videos-title">
+        <h2 id="project-videos-title" class="project-video-title">WATCH THE VIDEOS</h2>
+        <p class="project-detail-description">Browse the individual videos below, or explore the full playlist on YouTube.</p>
+        <div><a class="landing-link" href={d.videoPlaylistUrl} target="_blank" rel="noopener noreferrer">WATCH THE FULL PLAYLIST ↗</a></div>
+      </section>}
       {(d.additionalVideos ?? []).map((video) => <section class="project-video project-video-additional" aria-label={video.title}>
         <h2 class="project-video-title">{video.title}</h2>
         <div class="project-video-frame"><iframe src={embedUrl(video.url)} title={`${d.title}: ${video.title}`} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>

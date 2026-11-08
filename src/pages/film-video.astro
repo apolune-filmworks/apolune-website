@@ -1,0 +1,31 @@
+---
+import Work from "../layouts/Work.astro";
+import Icon from "../components/Icon.astro";
+import { withBase } from "../lib/urls";
+const paths = [
+  { number: "01", title: "APOLUNE ORIGINAL FILMS", text: "Narrative films and documentaries. Stories we believe in, made from the first idea to the final frame.", href: "/original-films", image: "/assets/film-video-originals.webp", position: "50% 45%", alt: "Four filmmakers holding bouquets in a cinema" },
+  { number: "02", title: "COMMERCIAL / VIDEO WORK", text: "Music videos, campaigns, and commissioned work. Bringing the same care for story to the artists and organisations we work with.", href: "/commercial-video", image: "/assets/film-video-commercial.webp", position: "50% 68%", alt: "Behind the scenes of Face Forward, with musicians and a camera operator on set" },
+  { number: "03", title: "PRODUCTION SERVICES", text: "Joining your crew, building your camera, and helping your shoot run smoothly. Practical support for productions across our community.", href: "/production-services", image: "/assets/film-video-services.webp", position: "75% 55%", alt: "A camera technician adjusts a cinema camera while a boom operator works beside him" },
+];
+---
+<Work title="Film & Video" description="Explore Apolune’s original narrative films and documentaries, commercial and video work, and production services.">
+  <header class="work-heading work-wrap film-intro">
+    <p class="work-eyebrow">APOLUNE / THE MOVING IMAGE</p>
+    <h1>FILM &amp; VIDEO.</h1>
+    <p class="work-lead">Stories we make.<br />Visions we help bring to life.</p>
+    <p class="work-copy">Apolune’s work spans original narrative films and documentaries, commercial projects and music videos, and production services for fellow filmmakers. Sometimes we take a story from its first spark to the screen. Sometimes we join your team for the day. It all starts with a love of making things together.</p>
+  </header>
+  <section class="work-paths work-wrap" aria-label="Explore film and video">
+    {paths.map((path) => (
+      <a class="work-path" href={withBase(path.href)}>
+        <div class:list={["work-path-image", { "work-path-image--camera": path.number === "03" }]}><img src={withBase(path.image)} alt={path.alt} loading="lazy" style={`object-position: ${path.position}`} /></div>
+        <div class="work-path-copy">
+          <span class="work-eyebrow">{path.number} / EXPLORE</span>
+          <h2>{path.title}</h2>
+          <p>{path.text}</p>
+          <span class="work-path-action">VIEW {path.number === "03" ? "SERVICES" : "PROJECTS"} <Icon name="arrow-right" /></span>
+        </div>
+      </a>
+    ))}
+  </section>
+</Work>

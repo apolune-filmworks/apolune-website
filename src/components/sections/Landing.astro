@@ -39,11 +39,7 @@ const posterAlt = landing.posterAlt ?? "Apolune landing background";
     </div>
     <h1 class="h1 landing-name" data-text={site?.name}>{site?.name}</h1>
     <div class="landing-links" role="group" aria-label="Explore Apolune">
-      {["APOLUNE ORIGINAL FILMS", "COMMERCIAL / VIDEO WORK", "PHOTOGRAPHY", "WRITING", "EVENTS", "ABOUT US / OUR MANIFESTO"].map((label) => (
-        label === "ABOUT US / OUR MANIFESTO"
-          ? <a class="landing-link" href={withBase("/manifesto")} >{label}</a>
-          : <button class="landing-link" type="button">{label}</button>
-      ))}
+      {site.explore.map((link) => <a class="landing-link" href={link.href}>{link.label}</a>)}
     </div>
     <button class="landing-link landing-reel-button" type="button" data-watch-reel aria-pressed="false">WATCH OUR REEL</button>
   </div>

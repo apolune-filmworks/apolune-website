@@ -1,0 +1,54 @@
+---
+import Work from "../layouts/Work.astro";
+import { withBase } from "../lib/urls";
+---
+<Work title="Production Services" description="Concept development, cinematography, post and colour, publishing strategy, and camera department and crew support from Apolune.">
+  <header class="work-heading work-wrap">
+    <p class="work-eyebrow">APOLUNE / ON YOUR SET</p>
+    <h1>PRODUCTION SERVICES.</h1>
+    <p class="work-lead">Your production.<br />A few more hands on deck.</p>
+    <p class="work-copy">Alongside our own projects, Apolune provides service work for existing productions, from concept development and cinematography to post and colour and publishing strategy. We can support a single stage or work across several, alongside our camera technicians and crew services — shaped around what your production needs.</p>
+  </header>
+  <figure class="crew-photo work-wrap">
+    <img src={withBase("/assets/bts-betterbeings-crew.webp")} alt="The BetterBeings crew gathered around a cinema camera" width="1919" height="1280" />
+    <figcaption>Good work starts with the people beside the camera.</figcaption>
+  </figure>
+  <section class="work-wrap service-contact" aria-labelledby="creative-services-title">
+    <p class="work-eyebrow">FROM THE FIRST IDEA TO RELEASE</p>
+    <h2 id="creative-services-title">Support at every stage.</h2>
+    <p class="work-copy">Bring us in wherever you need a hand. We can help develop the idea, capture the footage, shape the finished piece, and plan how it reaches an audience.</p>
+    <ul class="service-list">
+      <li>Concept development — ideas, story, creative direction, and pre-production</li>
+      <li>Cinematography — camera, lighting, and on-set production</li>
+      <li>Post &amp; colour — editing, colour grading, and original scoring</li>
+      <li>Publishing strategy — release planning, distribution, and audience campaigns</li>
+    </ul>
+  </section>
+  <section class="work-wrap service-details" aria-labelledby="camera-support-title">
+    <div>
+      <p class="work-eyebrow">CAMERA DEPARTMENT / CREW SUPPORT</p>
+      <h2 id="camera-support-title">Ready for the next take.</h2>
+      <p class="work-copy">We offer first and second assistant camera services, focus pulling, and specialised camera technicians. From compact setups to fully built cinema rigs, we help build, configure, and maintain camera systems of all sorts, with attention to the needs of the operator, the shot, and the wider crew.</p>
+      <ul class="service-list">
+        <li>First AC / focus pulling</li>
+        <li>Second AC / camera assistance</li>
+        <li>Camera prep, builds &amp; configuration</li>
+        <li>Specialised camera technicians</li>
+        <li>Camera department &amp; on-set crew support</li>
+      </ul>
+    </div>
+    <aside class="service-note" aria-labelledby="community-title">
+      <p class="work-eyebrow">PART OF THE COMMUNITY</p>
+      <h2 id="community-title">Helping each other make it.</h2>
+      <p>We love working alongside the filmmakers and crews in our community. The productions we support through service work are owned by their respective creators and production companies. Our involvement is as crew and collaborators; these are not Apolune-owned productions.</p>
+      <p>We’re putting together a full list of the productions we’ve helped with, along with our roles on each.</p>
+      <p class="coming-soon">FULL CREDITS LIST — COMING SOON</p>
+    </aside>
+  </section>
+  <section class="service-contact work-wrap" aria-labelledby="services-soon-title">
+    <p class="work-eyebrow">MORE TO COME</p>
+    <h2 id="services-soon-title">This page is still coming soon.</h2>
+    <p class="work-copy">More details and service credits are on the way. In the meantime, tell us what you’re making and where you could use a hand.</p>
+    <a class="landing-link" href="mailto:hello@apolune.net?subject=Production%20services">LET’S TALK ABOUT YOUR PRODUCTION</a>
+  </section>
+</Work>

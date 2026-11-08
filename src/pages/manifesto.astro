@@ -3,6 +3,7 @@ import { withBase } from "../lib/urls";
 import Base from "../layouts/Base.astro";
 import Topbar from "../components/Topbar.astro";
 import Footer from "../components/sections/Footer.astro";
+import About from "../components/sections/About.astro";
 import ScrollFade from "../components/ScrollFade.astro";
 import Icon from "../components/Icon.astro";
 import "../styles/manifesto.css";
@@ -48,6 +49,8 @@ const lastStanza = [
         <div class="manifesto-hero-foot"><span>STORIES FROM THE FAR POINT.</span><a href="#the-far-point">KEEP READING ↓</a></div>
       </div>
     </section>
+
+    <About showManifestoLink={false} />
 
     <section id="the-far-point" class="manifesto-paper manifesto-section" aria-labelledby="far-point-title">
       <div class="manifesto-wrap manifesto-editorial-grid">

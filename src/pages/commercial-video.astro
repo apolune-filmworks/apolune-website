@@ -1,0 +1,22 @@
+---
+import Work from "../layouts/Work.astro";
+import ProjectCards from "../components/ProjectCards.astro";
+import { getProjects, isOriginalFilm } from "../lib/site";
+import { withBase } from "../lib/urls";
+const featured = ["face-forward", "slowburn"];
+const projects = (await getProjects({ include: ["luxury-sport-sedan", "wishbone"] }))
+  .filter((project) => !isOriginalFilm(project))
+  .sort((a, b) => {
+    const rank = (id: string) => featured.includes(id) ? featured.indexOf(id) : featured.length;
+    return rank(a.id) - rank(b.id);
+  });
+---
+<Work title="COMMERCIAL / VIDEO WORK" description="Commercial projects, music videos, campaigns, and more from Apolune.">
+  <header class="work-heading work-wrap">
+    <a class="work-eyebrow" href={withBase("/film-video")}>APOLUNE / FILM &amp; VIDEO</a>
+    <h1>COMMERCIAL / VIDEO WORK</h1>
+  </header>
+  <section class="project-library" aria-label="COMMERCIAL / VIDEO WORK projects">
+    <ProjectCards projects={projects} />
+  </section>
+</Work>

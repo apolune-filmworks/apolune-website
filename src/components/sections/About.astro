@@ -2,6 +2,10 @@
 import { withBase } from "../../lib/urls";
 import { site } from "../../lib/site";
 import ScrollFade from "../ScrollFade.astro";
+interface Props {
+  showManifestoLink?: boolean;
+}
+const { showManifestoLink = true } = Astro.props;
 const { about } = site;
 ---
 <section id="about-alt" class="about" aria-labelledby="about-title">
@@ -19,10 +23,9 @@ const { about } = site;
         <ScrollFade>
           <p class="body about-copy">{about.bio}</p>
         </ScrollFade>
-        <div class="about-buttons">
+        {showManifestoLink && <div class="about-buttons">
           <a href={withBase("/manifesto")} class="landing-link">READ OUR MANIFESTO</a>
-          <button type="button" class="landing-link">MEET THE TEAM</button>
-        </div>
+        </div>}
       </div>
     </div>
   </div>

@@ -25,6 +25,7 @@ const projects = defineCollection({
     showcaseAlt: z.string().optional().default(""),
     
     videoEmbed: z.string().optional().default(""),
+    videoPlaylistUrl: z.string().url().optional(),
     additionalVideos: z.array(z.object({ title: z.string(), url: z.string().url() })).optional().default([]),
     gallery: z.array(z.string()).optional().default([]),
     pdfAttachment: z.string().optional().default(""),

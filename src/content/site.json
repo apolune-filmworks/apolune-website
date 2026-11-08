@@ -17,22 +17,22 @@
   "nav": [
     {
       "label": "FILM & VIDEO",
-      "href": "/#hero"
+      "href": "/film-video"
     },
     {
       "label": "FILM FESTIVAL",
       "href": "/film-festival"
     },
     {
+      "label": "WRITING",
+      "href": "/writing"
+    },
+    {
       "label": "EVENTS",
-      "href": "/#upcoming"
+      "href": "https://luma.com/apolune"
     },
     {
-      "label": "ABOUT",
-      "href": "/#about-alt"
-    },
-    {
-      "label": "MANIFESTO",
+      "label": "ABOUT / MANIFESTO",
       "href": "/manifesto"
     },
     {
@@ -43,7 +43,7 @@
   "footerNav": [
     {
       "label": "Works",
-      "href": "/#work"
+      "href": "/film-video"
     },
     {
       "label": "About",
@@ -326,11 +326,17 @@
     "publications": [
       {
         "label": "LINE OF BEST FIT",
-        "href": "https://anseltan.ca/writing/"
+        "href": "https://anseltan.ca/writing/",
+        "logo": "/assets/publications/line-of-best-fit.png",
+        "logoAlt": "LINE OF BEST FIT: Dispatches from the Long Road to Liberty",
+        "description": "Our in-house magazine for narrative, arts & culture, and poetry."
       },
       {
         "label": "THE APOLUNE POST",
-        "href": "https://lineofbestfit.substack.com/?utm_campaign=profile_chips"
+        "href": "https://lineofbestfit.substack.com/?utm_campaign=profile_chips",
+        "logo": "/assets/publications/the-apolune-post.png",
+        "logoAlt": "The Apolune Post angel and paper airplane emblem",
+        "description": "Our in-house Substack: notes, ideas, and dispatches from Apolune."
       }
     ]
   },
@@ -344,15 +350,15 @@
       "alt": "The Face Forward cast and crew together after production"
     },
     {
-      "src": "/assets/bts-face-forward-img-9401.webp",
+      "src": "/assets/bts-face-forward-9401-corrected.webp",
       "alt": "Musicians performing under a spotlight on the Face Forward set"
     },
     {
-      "src": "/assets/bts-face-forward-img-9393.webp",
+      "src": "/assets/bts-face-forward-9393-corrected.webp",
       "alt": "Behind the scenes on the Face Forward set"
     },
     {
-      "src": "/assets/bts-face-forward-img-9398.webp",
+      "src": "/assets/bts-face-forward-9398-corrected.webp",
       "alt": "Lighting and camera setup during the Face Forward shoot"
     },
     {
@@ -386,6 +392,36 @@
     {
       "src": "/assets/bts-betterbeings-slate.webp",
       "alt": "A BetterBeings cast member holding the production slate"
+    }
+  ],
+  "explore": [
+    {
+      "label": "APOLUNE ORIGINAL FILMS",
+      "href": "/original-films"
+    },
+    {
+      "label": "COMMERCIAL / VIDEO WORK",
+      "href": "/commercial-video"
+    },
+    {
+      "label": "PRODUCTION SERVICES",
+      "href": "/production-services"
+    },
+    {
+      "label": "PHOTOGRAPHY",
+      "href": "https://anseltan.ca/photography/"
+    },
+    {
+      "label": "WRITING",
+      "href": "/writing"
+    },
+    {
+      "label": "EVENTS",
+      "href": "https://luma.com/apolune"
+    },
+    {
+      "label": "ABOUT US / OUR MANIFESTO",
+      "href": "/manifesto"
     }
   ]
 }

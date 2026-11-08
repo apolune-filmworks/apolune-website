@@ -1,34 +1,19 @@
 ---
-import { withBase } from "../../lib/urls";
 import { getProjects } from "../../lib/site";
+import ProjectCards from "../ProjectCards.astro";
+import { withBase } from "../../lib/urls";
 import Icon from "../Icon.astro";
-import ScrollFade from "../ScrollFade.astro";
 const projects = await getProjects();
 ---
 <section id="hero" class="project-library" aria-labelledby="project-library-title">
   <header class="project-library-header">
     <h2 id="project-library-title" class="h3">SELECTED WORKS</h2>
   </header>
-  <div class="project-library-grid">
-    {projects.map((project) => (
-      <ScrollFade>
-      <a class="upcoming-card library-card" href={withBase(`/projects/${project.id}`)} aria-label={`Explore ${project.data.title}`}>
-        <img class="upcoming-image" src={project.data.libraryCover || project.data.cover} alt={project.data.libraryCoverAlt || project.data.coverAlt || project.data.title} loading="lazy" />
-        <div class="upcoming-copy">
-          <h3 class="upcoming-title library-title">{project.data.title}</h3>
-          {project.data.subtitle && <p class="library-subtitle">{project.data.subtitle}</p>}
-          <p class="library-category">{project.data.category}</p>
-          {project.data.cardNote && <p class="library-note">{project.data.cardNote}</p>}
-          <span class="pc-ref-btn" aria-hidden="true"><Icon name="carousel-arrow" size={22} /></span>
-        </div>
-      </a>
-      </ScrollFade>
-    ))}
-  </div>
+  <ProjectCards projects={projects} />
   <div class="project-library-footer">
-    <button class="landing-link portfolio-button" type="button">
+    <a class="landing-link portfolio-button" href={withBase("/film-video")}>
       SEE OUR FULL PORTFOLIO
       <Icon name="arrow-up-right" size={20} />
-    </button>
+    </a>
   </div>
 </section>

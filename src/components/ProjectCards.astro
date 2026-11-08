@@ -1,0 +1,26 @@
+---
+import { withBase } from "../lib/urls";
+import type { getProjects } from "../lib/site";
+import Icon from "./Icon.astro";
+import ScrollFade from "./ScrollFade.astro";
+interface Props {
+  projects: Awaited<ReturnType<typeof getProjects>>;
+}
+const { projects } = Astro.props;
+---
+  <div class="project-library-grid">
+    {projects.map((project) => (
+      <ScrollFade>
+      <a class="upcoming-card library-card" href={withBase(`/projects/${project.id}`)} aria-label={`Explore ${project.data.title}`}>
+        <img class="upcoming-image" src={project.data.libraryCover || project.data.cover} alt={project.data.libraryCoverAlt || project.data.coverAlt || project.data.title} loading="lazy" />
+        <div class="upcoming-copy">
+          <h3 class="upcoming-title library-title">{project.data.title}</h3>
+          {project.data.subtitle && <p class="library-subtitle">{project.data.subtitle}</p>}
+          <p class="library-category">{project.data.category}</p>
+          {project.data.cardNote && <p class="library-note">{project.data.cardNote}</p>}
+          <span class="pc-ref-btn" aria-hidden="true"><Icon name="carousel-arrow" size={22} /></span>
+        </div>
+      </a>
+      </ScrollFade>
+    ))}
+  </div>

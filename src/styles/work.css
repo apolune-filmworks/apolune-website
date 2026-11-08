@@ -1,0 +1,65 @@
+/* Shared pages for film, crew work, and publishing. */
+.work-page {
+  --work-cream: #f4ead9;
+  background: #04091b url('/assets/festival/stars.webp') center top / 1440px auto repeat;
+  color: var(--work-cream);
+  padding-bottom: 24px;
+}
+.work-wrap { width: min(94%, 1400px); margin-inline: auto; }
+.work-heading { padding-block: clamp(64px, 8vw, 128px) clamp(40px, 5vw, 72px); }
+.work-eyebrow { display: inline-block; font-family: var(--font-heading); font-size: 12px; font-weight: 600; line-height: 1.5; letter-spacing: .12em; }
+.work-heading h1 { max-width: 1150px; margin: 24px 0 0; font-family: var(--font-heading); font-size: clamp(40px, 7.8vw, 112px); font-weight: 600; line-height: .98; letter-spacing: -.045em; text-wrap: balance; overflow-wrap: break-word; }
+.work-lead { max-width: 950px; margin: 36px 0 24px; font-family: var(--font-serif); font-size: clamp(32px, 4.5vw, 62px); line-height: 1.1; letter-spacing: -.035em; }
+.work-copy { max-width: 750px; font-family: var(--font-serif); font-size: clamp(22px, 2.2vw, 29px); line-height: 1.5; letter-spacing: -.02em; text-wrap: pretty; }
+.work-page .project-library { padding-top: 0; }
+.work-nav { display: flex; flex-wrap: wrap; gap: 20px 32px; padding-block: 32px; border-top: 1px solid rgba(244,234,217,.25); }
+.work-nav a { font-family: var(--font-heading); font-size: 12px; line-height: 1.5; letter-spacing: .045em; color: var(--work-cream); text-underline-offset: 5px; }
+.work-nav a:hover { text-decoration: underline; }
+.work-page a:focus-visible { outline: 2px solid var(--work-cream); outline-offset: 5px; }
+.film-intro { position: relative; }
+.work-paths { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; padding-bottom: clamp(56px, 8vw, 120px); }
+.work-path { min-width: 0; display: flex; flex-direction: column; color: var(--work-cream); border: 1px solid rgba(244,234,217,.3); background: rgba(4,9,27,.8); transition: border-color .2s ease; }
+.work-path-image { aspect-ratio: 4 / 3; overflow: hidden; }
+.work-path-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+/* Keep the technician and camera prominent when the portrait fills a wide card. */
+.work-path-image--camera img { scale: 1.8; transform-origin: right center; }
+.work-path-copy { display: flex; flex: 1; flex-direction: column; align-items: start; gap: 20px; padding: clamp(20px, 2.5vw, 36px); }
+.work-path h2 { font-family: var(--font-heading); font-size: clamp(25px, 2.6vw, 38px); line-height: 1.05; letter-spacing: -.025em; overflow-wrap: break-word; }
+.work-path p { font-family: var(--font-serif); font-size: 23px; line-height: 1.45; }
+.work-path-action { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; margin-top: auto; padding-top: 16px; border-top: 1px solid rgba(244,234,217,.25); font-family: var(--font-heading); font-size: 12px; letter-spacing: .06em; }
+@media (hover: hover) { .work-path:hover { border-color: var(--work-cream); } .work-path:hover img { transform: scale(1.035); } }
+.crew-photo { margin-block: 0 clamp(48px, 7vw, 96px); }
+.crew-photo img { display: block; width: 100%; height: auto; }
+.crew-photo figcaption { padding-top: 12px; font-family: var(--font-serif); font-size: 20px; font-style: italic; }
+.service-details { display: grid; grid-template-columns: 1.15fr 1fr; align-items: start; gap: clamp(32px, 7vw, 100px); padding-bottom: 64px; }
+.service-details h2, .service-contact h2 { margin-block: 20px; font-family: var(--font-serif); font-size: clamp(36px, 4vw, 56px); line-height: 1.05; letter-spacing: -.035em; }
+.service-list { list-style: none; margin: 32px 0 0; padding: 0; }
+.service-list li { padding-block: 16px; border-top: 1px solid rgba(244,234,217,.25); font-family: var(--font-heading); font-size: 16px; }
+.service-note { border: 1px solid rgba(244,234,217,.3); padding: clamp(24px, 3vw, 44px); background: rgba(4,9,27,.8); }
+.service-note > p:not(.work-eyebrow):not(.coming-soon) { font-family: var(--font-serif); font-size: 24px; line-height: 1.5; margin-block: 20px; }
+.coming-soon { padding-top: 24px; border-top: 1px solid rgba(244,234,217,.25); font-family: var(--font-heading); font-size: 13px; line-height: 1.6; letter-spacing: .06em; }
+.service-contact { padding-block: 32px 88px; }
+.service-contact .landing-link { display: inline-block; margin-top: 28px; }
+.work-page .writings-dedicated { min-height: 0; padding-block: clamp(64px, 8vw, 120px); }
+.writings-dedicated .writings-content { width: 100%; max-width: 1100px; min-width: 0; margin-inline: auto; text-align: center; }
+.writings-dedicated .writings-content > .sf { width: 100%; min-width: 0; }
+.writings-dedicated h1 { font-family: var(--font-heading); font-size: clamp(40px, 7vw, 88px); font-weight: 600; line-height: 1; letter-spacing: -.035em; text-wrap: balance; }
+.writings-dedicated .writings-copy { max-width: 900px; margin-inline: auto; text-align: center; }
+.publication-grid { width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: 32px; margin-top: 24px; }
+.publication { min-width: 0; display: grid; grid-template-rows: auto auto 1fr; justify-items: center; align-content: start; gap: 24px; padding: clamp(24px, 3vw, 40px); border: 1px solid rgba(244,234,217,.3); background: rgba(4,9,27,.88); text-align: center; }
+.publication-logo { position: relative; width: 100%; height: clamp(200px, 24vw, 300px); min-width: 0; overflow: hidden; }
+.publication-logo img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
+.publication p { width: 100%; max-width: 32ch; margin: 0 auto; font-family: var(--font-serif); font-size: 24px; line-height: 1.4; text-align: center; }
+.publication .landing-link { max-width: 100%; margin: 0; text-align: center; }
+@media (max-width: 1000px) { .work-paths { grid-template-columns: 1fr; } .work-path { display: grid; grid-template-columns: 1fr 1fr; } .work-path-image { height: 100%; aspect-ratio: auto; min-height: 320px; } }
+@media (max-width: 809px) {
+  .work-wrap { width: calc(100% - 40px); }
+  .work-heading h1 { font-size: clamp(36px, 10vw, 72px); }
+  .service-details, .publication-grid { grid-template-columns: 1fr; }
+  .work-path { display: flex; }
+  .work-path-image { aspect-ratio: 16 / 10; min-height: 0; }
+  .work-path h2 { font-size: 32px; }
+  .work-nav { gap: 20px 24px; }
+  .publication-logo { height: 240px; }
+}
+@media (prefers-reduced-motion: reduce) { .work-path, .work-path-image img { transition: none; } .work-path:hover img { transform: none; } }

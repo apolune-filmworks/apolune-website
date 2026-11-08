@@ -1,0 +1,26 @@
+---
+import Base from "./Base.astro";
+import Topbar from "../components/Topbar.astro";
+import Footer from "../components/sections/Footer.astro";
+import { withBase } from "../lib/urls";
+import "../styles/work.css";
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+<Base title={`${title} | Apolune`} description={description}>
+  <Topbar />
+  <main class="work-page">
+    <slot />
+    <nav class="work-nav work-wrap" aria-label="Explore our work">
+      <a href={withBase("/film-video")}>FILM &amp; VIDEO</a>
+      <a href={withBase("/original-films")}>ORIGINAL FILMS</a>
+      <a href={withBase("/commercial-video")}>COMMERCIAL / VIDEO</a>
+      <a href={withBase("/production-services")}>PRODUCTION SERVICES</a>
+      <a href={withBase("/writing")}>WRITING</a>
+    </nav>
+  </main>
+  <Footer />
+</Base>
