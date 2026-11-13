@@ -1,0 +1,98 @@
+---
+import { withBase } from "../lib/urls";
+import { images, rows as allRows } from "../data/event-photos.json";
+interface Props { category?: 'event' | 'photojournalism'; label?: string; }
+const { category, label = "Photography by Ansel Tan" } = Astro.props;
+const selected = images.map((image, index) => ({ ...image, index })).filter(image => !category || image.category === category);
+const rows = category ? Array.from({ length: Math.ceil(selected.length / 3) }, (_, i) => selected.slice(i * 3, i * 3 + 3).map(image => ({ basis: `${image.width / image.height}`, images: [image.index] }))) : allRows;
+const ratio = (column: { images: number[] }) => column.images.reduce((sum, index) => sum + images[index].height / images[index].width, 0);
+---
+<section class="event-gallery work-wrap" aria-label={label}>
+  {rows.map((row) => <div class="event-row" data-photo-row>
+    {row.map((column) => <div class="event-column" data-column-ratio={ratio(column)} data-column-count={column.images.length} style={`flex:${1 / ratio(column)} 1 0%`}>
+      {column.images.map((index) => {
+        const image = images[index];
+        return <a class="event-tile" style={`--photo-ratio:${image.width / image.height}`} href={withBase(image.src)} data-photo={index} aria-label={`Open photograph ${selected.findIndex(item => item.index === index) + 1} of ${selected.length}`}><img src={withBase(image.src)} alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async" /></a>;
+      })}
+    </div>)}
+  </div>)}
+</section>
+<dialog class="event-lightbox" aria-label="Photography viewer">
+  <div class="event-lightbox-bar"><p data-photo-count aria-live="polite"></p><button type="button" data-close aria-label="Close photo viewer">CLOSE ✕</button></div>
+  <img data-full-photo alt="" />
+  <div class="event-lightbox-controls"><button type="button" data-prev aria-label="Previous photograph">← PREVIOUS</button><button type="button" data-next aria-label="Next photograph">NEXT →</button></div>
+</dialog>
+<style>
+  .event-gallery { padding-bottom: clamp(56px, 8vw, 120px); }
+  .event-row { display: flex; align-items: flex-start; gap: 4px; margin-bottom: 4px; }
+  .event-column { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .event-tile { display: block; width: 100%; }
+  .event-tile img { display: block; width: 100%; height: auto; }
+  .event-lightbox { position: fixed; inset: 0; width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 20px; border: 0; background: #04070ef5; color: #f4ead9; }
+  .event-lightbox[open] { display: flex; flex-direction: column; gap: 16px; }
+  .event-lightbox::backdrop { background: #04070e; }
+  .event-lightbox img { flex: 1; min-height: 0; width: 100%; object-fit: contain; }
+  .event-lightbox-bar, .event-lightbox-controls { display: flex; justify-content: space-between; align-items: center; gap: 20px; font-family: var(--font-heading); font-size: 12px; }
+  .event-lightbox button { padding: 12px; background: transparent; color: inherit; border: 1px solid #f4ead960; cursor: pointer; }
+  .event-lightbox button:focus-visible { outline: 2px solid #f4ead9; outline-offset: 3px; }
+  @media (max-width: 600px) {
+    .event-row { display: block; margin-bottom: 0; }
+    .event-column { width: 100% !important; gap: 0; }
+    .event-tile { margin-bottom: 4px; }
+    .event-lightbox { padding: 12px; }
+  }
+</style>
+<script>
+  // Solve each row using the images’ natural proportions, including every gutter.
+  // No fixed tile heights or object-fit cropping: the full photographs stay visible.
+  const gallery = document.querySelector<HTMLElement>('.event-gallery');
+  if (gallery) {
+    const layout = () => {
+      const mobile = window.matchMedia('(max-width: 600px)').matches;
+      gallery.querySelectorAll<HTMLElement>('[data-photo-row]').forEach(row => {
+        const columns = Array.from(row.querySelectorAll<HTMLElement>('[data-column-ratio]'));
+        const gap = parseFloat(getComputedStyle(row).columnGap) || 4;
+        const ratios = columns.map(column => Number(column.dataset.columnRatio));
+        const gutters = columns.map(column => gap * (Number(column.dataset.columnCount) - 1));
+        const inverseRatios = ratios.reduce((sum, ratio) => sum + 1 / ratio, 0);
+        const rowHeight = (row.clientWidth - gap * (columns.length - 1) + gutters.reduce((sum, gutter, i) => sum + gutter / ratios[i], 0)) / inverseRatios;
+        columns.forEach((column, i) => {
+          column.style.flex = mobile ? '' : '0 0 auto';
+          column.style.width = mobile ? '' : `${(rowHeight - gutters[i]) / ratios[i]}px`;
+        });
+      });
+    };
+    new ResizeObserver(layout).observe(gallery);
+    layout();
+  }
+
+  const dialog = document.querySelector<HTMLDialogElement>('.event-lightbox');
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-photo]'));
+  if (dialog) {
+    const full = dialog.querySelector<HTMLImageElement>('[data-full-photo]')!;
+    const count = dialog.querySelector<HTMLElement>('[data-photo-count]')!;
+    let current = 0;
+    const show = (index: number) => {
+      current = (index + links.length) % links.length;
+      full.src = links[current].href;
+      full.alt = links[current].querySelector('img')?.alt ?? '';
+      count.textContent = `${current + 1} / ${links.length}`;
+    };
+    links.forEach((link, i) => link.addEventListener('click', (event) => {
+      event.preventDefault(); show(i); dialog.showModal();
+      document.documentElement.style.overflow = 'hidden';
+    }));
+    dialog.querySelector('[data-close]')?.addEventListener('click', () => dialog.close());
+    dialog.querySelector('[data-prev]')?.addEventListener('click', () => show(current - 1));
+    dialog.querySelector('[data-next]')?.addEventListener('click', () => show(current + 1));
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault(); show(current + (event.key === 'ArrowLeft' ? -1 : 1));
+      }
+    });
+    dialog.addEventListener('close', () => {
+      document.documentElement.style.overflow = '';
+      links[current].focus();
+    });
+  }
+</script>

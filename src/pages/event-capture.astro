@@ -1,0 +1,17 @@
+---
+import Work from "../layouts/Work.astro";
+import PhotoGallery from "../components/PhotoGallery.astro";
+import { withBase } from "../lib/urls";
+import { site } from "../lib/site";
+---
+<Work title="EVENT CAPTURE" description="Event Capture photography and video by Ansel Tan at Apolune.">
+  <header class="work-heading work-wrap">
+    <a class="work-eyebrow" href={withBase("/photo-video")}>APOLUNE / PHOTO &amp; VIDEO</a>
+    <h1>EVENT CAPTURE</h1>
+    <p class="work-lead">The energy of the room. The moments worth keeping.</p>
+    <p class="work-copy">Live music, performances, celebrations, and community gatherings: I capture the people and atmosphere that make each event its own. From photography and video coverage to a highlight film to share afterwards, I follow the action and look for the quiet moments around it.</p>
+    <a class="work-eyebrow enquiry" href={`mailto:${site.email}`}>LET’S TALK ABOUT YOUR PROJECT ↗</a>
+  </header>
+  <PhotoGallery category="event" label="Event Capture photography by Ansel Tan" />
+</Work>
+<style>.enquiry { margin-top: 28px; text-decoration: underline; text-underline-offset: 6px; }</style>

@@ -1,0 +1,17 @@
+---
+import Work from "../layouts/Work.astro";
+import PhotoGallery from "../components/PhotoGallery.astro";
+import { withBase } from "../lib/urls";
+import { site } from "../lib/site";
+---
+<Work title="PHOTOJOURNALISM" description="Photojournalism photography and video by Ansel Tan at Apolune.">
+  <header class="work-heading work-wrap">
+    <a class="work-eyebrow" href={withBase("/photo-video")}>APOLUNE / PHOTO &amp; VIDEO</a>
+    <h1>PHOTOJOURNALISM</h1>
+    <p class="work-lead">Everyday life, with a story to tell.</p>
+    <p class="work-copy">A collection of observations from streets, travels, and time spent with people. My approach is rooted in curiosity: paying attention to a place, noticing how people move through it, and finding the small moments that say something about being there. For editorial photography or a documentary project, I’d love to hear your idea.</p>
+    <a class="work-eyebrow enquiry" href={`mailto:${site.email}`}>LET’S TALK ABOUT YOUR PROJECT ↗</a>
+  </header>
+  <PhotoGallery category="photojournalism" label="Photojournalism photography by Ansel Tan" />
+</Work>
+<style>.enquiry { margin-top: 28px; text-decoration: underline; text-underline-offset: 6px; }</style>

@@ -1,0 +1,48 @@
+---
+import Work from "../layouts/Work.astro";
+import PhotoGallery from "../components/PhotoGallery.astro";
+import { withBase } from "../lib/urls";
+import { site } from "../lib/site";
+---
+<Work title="PHOTO & VIDEO" description="Photography and video by Ansel Tan at Apolune. Event capture, photojournalism, portraits, weddings, food, and more.">
+  <header class="work-heading work-wrap photo-heading">
+    <a class="work-eyebrow" href={withBase("/film-video")}>APOLUNE / FILM VIDEO &amp; PHOTO</a>
+    <h1>PHOTO &amp; VIDEO</h1>
+    <p class="work-lead">People. Places. Everything in between.</p>
+    <p class="work-copy">I’m Ansel Tan, a photographer and filmmaker working through Apolune. I follow the energy of a room, the stories in everyday life, and the details that make something yours. From a single photograph to a film of the whole day, I bring a thoughtful eye and a love of people to every shoot.</p>
+  </header>
+  <section class="photo-options work-wrap" aria-label="Photography and video services">
+    <a class="photo-option" href={withBase("/event-capture")}>
+      <span class="work-eyebrow">01 / IN THE MOMENT</span>
+      <h2>EVENT CAPTURE</h2>
+      <p>Live music, performances, celebrations, and community gatherings. The action, the atmosphere, and the moments around it.</p>
+      <span class="work-eyebrow photo-action">EXPLORE EVENTS ↗</span>
+    </a>
+    <a class="photo-option" href={withBase("/photojournalism")}>
+      <span class="work-eyebrow">02 / EVERYDAY STORIES</span>
+      <h2>PHOTOJOURNALISM</h2>
+      <p>People, places, and life as it unfolds. Observational photographs with a sense of story, curiosity, and connection.</p>
+      <span class="work-eyebrow photo-action">EXPLORE THE GALLERY ↗</span>
+    </a>
+    <article class="photo-option">
+      <span class="work-eyebrow">03 / SOMETHING ELSE IN MIND?</span>
+      <h2>LET’S MAKE IT HAPPEN</h2>
+      <p>Weddings, elopements, portraits, restaurants &amp; food, or an idea all your own. I’m open to almost anything. Tell me what you’re thinking.</p>
+      <a class="work-eyebrow photo-action" href={`mailto:${site.email}`}>GET IN TOUCH ↗</a>
+    </article>
+  </section>
+  <div class="work-wrap photo-gallery-heading"><h2 class="work-eyebrow">SELECTED PHOTOGRAPHS / ALL WORK</h2><p>Events, everyday stories, and everything in between.</p></div>
+  <PhotoGallery />
+</Work>
+<style>
+  .photo-heading { padding-bottom: 36px; }
+  .photo-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; padding-bottom: 64px; }
+  .photo-option { display: flex; flex-direction: column; gap: 20px; padding: clamp(20px, 2.5vw, 32px); color: inherit; background: #04091bcc; border: 1px solid #f4ead94d; }
+  a.photo-option:hover { border-color: #f4ead9; }
+  .photo-option h2 { font-family: var(--font-heading); font-size: clamp(22px, 2.4vw, 32px); line-height: 1.1; letter-spacing: -.025em; }
+  .photo-option p { font-family: var(--font-serif); font-size: 21px; line-height: 1.45; }
+  .photo-action { margin-top: auto; padding-top: 16px; border-top: 1px solid #f4ead94d; }
+  .photo-gallery-heading { padding-bottom: 24px; }
+  .photo-gallery-heading p { font-family: var(--font-serif); font-size: 22px; margin-top: 12px; }
+  @media (max-width: 809px) { .photo-options { grid-template-columns: 1fr; } }
+</style>
