@@ -15,10 +15,10 @@ interface Props {
 const defaultTitle = `${site.name} | ${site.role}`;
 const {
   title = defaultTitle,
-  description = "Product & motion designer with a decade of turning complex products into simple, living experiences. Selected work, services and awards.",
+  description = "Apolune is an independent production house and creative collective. Explore our films, photography, writing, and events. Stories from the far point.",
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL(withBase("/assets/og.webp"), Astro.site);
+const ogImage = new URL(withBase("/assets/apolune-social.png"), Astro.site);
 const analytics = import.meta.env.PUBLIC_VERCEL_ANALYTICS === "true";
 const storeBadge = import.meta.env.PUBLIC_STORE_BADGE === "true";
 ---
@@ -34,14 +34,20 @@ const storeBadge = import.meta.env.PUBLIC_STORE_BADGE === "true";
     <link rel="icon" type="image/png" sizes="64x64" href={withBase("/favicon.png")} />
     <meta name="theme-color" content="#121212" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Apolune — Independent Production House & Creative Collective" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="Apolune — Independent Production House & Creative Collective" />
   </head>
   <body class:list={{ "homepage": Astro.url.pathname.replace(/\/$/, "") === withBase("/").replace(/\/$/, "") }}>
     <slot />
