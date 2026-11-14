@@ -1,5 +1,7 @@
 ---
 import Work from "../layouts/Work.astro";
+import { getCollection } from "astro:content";
+import portfolioVideos from "../data/portfolio-videos.json";
 import ProjectCards from "../components/ProjectCards.astro";
 import { getProjects, isOriginalFilm } from "../lib/site";
 import { withBase } from "../lib/urls";
@@ -8,17 +10,58 @@ const projects = (await getProjects({ include: [...featured, "live-free-or-die",
   .filter(isOriginalFilm)
   .sort((a, b) => {
     const rank = (id: string) => featured.includes(id) ? featured.indexOf(id) : featured.length;
-    return rank(a.id) - rank(b.id);
+    const theatreOrder = Number(/theatre/i.test(a.data.category)) - Number(/theatre/i.test(b.data.category));
+    return theatreOrder || rank(a.id) - rank(b.id);
   });
+const entries = await getCollection("projects");
+const stills = projects.filter(project => !/theatre/i.test(project.data.category)).map(project => {
+  const data = entries.find(entry => entry.id === project.id)?.data;
+  const videoId = data?.videoEmbed.match(/(?:embed\/|watch\?v=)([\w-]{11})/)?.[1];
+  const still = data?.gallery[0] || (data?.cover.includes('/wp-projects/') ? data.cover : '') || (videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : '');
+  return still ? { src: withBase(still), title: project.data.title, href: withBase(`/projects/${project.id}`) } : null;
+}).filter((still): still is { src: string; title: string; href: string } => Boolean(still));
+for (const video of portfolioVideos.filter(video => video.category === 'originals')) {
+  stills.push({ src: video.thumbnail, title: video.title, href: `https://www.youtube.com/watch?v=${video.id}` });
+}
+
 ---
 <Work title="APOLUNE ORIGINAL FILMS" description="Original narrative films and documentaries from Apolune. Explore the stories and the projects behind them.">
   <header class="work-heading work-wrap">
     <a class="work-eyebrow" href={withBase("/film-video")}>APOLUNE / FILM VIDEO &amp; PHOTO</a>
     <h1>APOLUNE ORIGINAL FILMS</h1>
+    <div class="original-reel">
+      <iframe src="https://www.youtube-nocookie.com/embed/dY0PV9MDbGE" title="Apolune — film reel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
     <p class="work-lead">Our stories, from the first idea to the final frame.</p>
     <p class="work-copy">These are the narrative films and documentaries we make in-house, from start to finish. We develop the stories, write the scripts, bring a cast and crew together, and carry the work through cinematography, editing, colour, and original scoring. From short films to features, each project begins with a story we believe is worth telling — and a group of people determined to bring it to life.</p>
   </header>
+  <section class="film-stills work-wrap" aria-label="Selected film stills">
+    <div class="film-stills-heading"><h2 class="work-eyebrow">FRAMES FROM OUR FILMS</h2><div><button type="button" data-stills-back aria-label="Previous film stills">←</button><button type="button" data-stills-forward aria-label="Next film stills">→</button></div></div>
+    <div class="film-stills-strip" data-stills-strip tabindex="0" aria-label="Film stills. Scroll horizontally to explore.">
+      {stills.map(still => <a href={still.href}><img src={still.src} alt={`A frame from ${still.title}`} loading="lazy" decoding="async" /><span>{still.title}</span></a>)}
+    </div>
+  </section>
   <section class="project-library" aria-label="APOLUNE ORIGINAL FILMS projects">
     <ProjectCards projects={projects} />
   </section>
 </Work>
+
+<style>
+  .original-reel { margin-top: 40px; width: min(100%, 960px); aspect-ratio: 16 / 9; background: #000; }
+  .original-reel iframe { display: block; width: 100%; height: 100%; border: 0; }
+  .film-stills { padding-bottom: 48px; }
+  .film-stills-heading { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 16px; }
+  .film-stills-heading > div { display: flex; gap: 8px; }
+  .film-stills-heading button { width: 40px; height: 40px; border: 1px solid #f4ead960; color: #f4ead9; background: transparent; cursor: pointer; }
+  .film-stills-strip { display: grid; grid-auto-flow: column; grid-auto-columns: min(280px, 78vw); gap: 12px; overflow-x: auto; padding-bottom: 14px; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: #f4ead980 transparent; }
+  .film-stills-strip a { min-width: 0; color: inherit; scroll-snap-align: start; }
+  .film-stills-strip img { display: block; width: 100%; height: 158px; object-fit: contain; background: #000; }
+  .film-stills-strip span { display: block; margin-top: 10px; font-family: var(--font-heading); font-size: 11px; line-height: 1.4; }
+  .film-stills button:focus-visible, .film-stills-strip:focus-visible { outline: 2px solid #f4ead9; outline-offset: 4px; }
+</style>
+<script>
+  const strip = document.querySelector<HTMLElement>('[data-stills-strip]');
+  const move = (direction: number) => strip?.scrollBy({ left: direction * strip.clientWidth * .8, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+  document.querySelector('[data-stills-back]')?.addEventListener('click', () => move(-1));
+  document.querySelector('[data-stills-forward]')?.addEventListener('click', () => move(1));
+</script>

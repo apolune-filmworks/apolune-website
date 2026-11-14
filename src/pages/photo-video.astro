@@ -1,8 +1,18 @@
 ---
 import Work from "../layouts/Work.astro";
 import PhotoGallery from "../components/PhotoGallery.astro";
+import VideoGallery from "../components/VideoGallery.astro";
+import portfolioVideos from "../data/portfolio-videos.json";
 import { withBase } from "../lib/urls";
-import { site } from "../lib/site";
+import { images } from "../data/event-photos.json";
+const categories = [
+  { id: "music", title: "LIVE MUSIC & MUSIC VIDEOS", image: "/assets/event-photo/wishbone-cobalt-auto-118.jpeg", alt: "Wishbone performing live", copy: "Live performances, music videos, and the people behind the sound." },
+  { id: "events", title: "EVENT COVERAGE", image: "/assets/event-coverage-trade-show.webp", alt: "CES at the Las Vegas Convention Center", copy: "From live gatherings to the trade show floor. The people, the atmosphere, and the moments that matter." },
+  { id: "campaigns", title: "CAMPAIGNS", image: "/assets/event-photo/14-zoe-emily.jpg", alt: "Goosehunt campaign portraits of Zoe and Emily", copy: "Brand stories and sponsored content, made for the people you want to reach." },
+  { id: "photojournalism", title: "PHOTOJOURNALISM", image: "/assets/event-photo/instafilm-1.jpeg", alt: "A cyclist passing a shop in Japan", copy: "People, places, and everyday stories, observed as they unfold." },
+  { id: "portraits", title: "PORTRAITS", image: "/assets/event-photo/clarejesse-horizontal-2.jpeg", alt: "A couple silhouetted beside the Golden Gate Bridge", copy: "Photographs with personality, connection, and a sense of who you are." },
+  { id: "travel", title: "TRAVEL", image: "/assets/event-photo/insta-2.jpeg", alt: "Mount Baker–Snoqualmie National Forest sign", copy: "Journeys, landscapes, and the places we pass through." },
+].map(category => ({ ...category, photoCount: images.filter(image => image.tags.includes(category.id === "travel" ? "photojournalism" : category.id)).length, videoCount: portfolioVideos.filter(video => ("categories" in video ? video.categories : [video.category]).includes(category.id)).length }));
 ---
 <Work title="PHOTO & VIDEO" description="Photography and video by Ansel Tan at Apolune. Event capture, photojournalism, portraits, weddings, food, and more.">
   <header class="work-heading work-wrap photo-heading">
@@ -11,38 +21,104 @@ import { site } from "../lib/site";
     <p class="work-lead">People. Places. Everything in between.</p>
     <p class="work-copy">I’m Ansel Tan, a photographer and filmmaker working through Apolune. I follow the energy of a room, the stories in everyday life, and the details that make something yours. From a single photograph to a film of the whole day, I bring a thoughtful eye and a love of people to every shoot.</p>
   </header>
-  <section class="photo-options work-wrap" aria-label="Photography and video services">
-    <a class="photo-option" href={withBase("/event-capture")}>
-      <span class="work-eyebrow">01 / IN THE MOMENT</span>
-      <h2>EVENT CAPTURE</h2>
-      <p>Live music, performances, celebrations, and community gatherings. The action, the atmosphere, and the moments around it.</p>
-      <span class="work-eyebrow photo-action">EXPLORE EVENTS ↗</span>
-    </a>
-    <a class="photo-option" href={withBase("/photojournalism")}>
-      <span class="work-eyebrow">02 / EVERYDAY STORIES</span>
-      <h2>PHOTOJOURNALISM</h2>
-      <p>People, places, and life as it unfolds. Observational photographs with a sense of story, curiosity, and connection.</p>
-      <span class="work-eyebrow photo-action">EXPLORE THE GALLERY ↗</span>
-    </a>
-    <article class="photo-option">
-      <span class="work-eyebrow">03 / SOMETHING ELSE IN MIND?</span>
-      <h2>LET’S MAKE IT HAPPEN</h2>
-      <p>Weddings, elopements, portraits, restaurants &amp; food, or an idea all your own. I’m open to almost anything. Tell me what you’re thinking.</p>
-      <a class="work-eyebrow photo-action" href={`mailto:${site.email}`}>GET IN TOUCH ↗</a>
-    </article>
+  <div class="category-bar-heading work-wrap"><p class="work-eyebrow">EXPLORE THE WORK</p><div><button type="button" data-category-prev aria-label="Previous categories">←</button><button type="button" data-category-next aria-label="Next categories">→</button></div></div>
+  <section class="photo-options work-wrap" data-category-strip tabindex="0" aria-label="Explore photo and video by category">
+    {categories.map(category => <a class="photo-option" href="#portfolio-library" data-category-jump={category.id}>
+      <img class:list={["photo-option-image", { "photo-option-image--goosehunt": category.id === "campaigns" }]} src={withBase(category.image)} alt={category.alt} loading="lazy" />
+      <div class="photo-option-copy">
+        <span class="work-eyebrow">{category.videoCount > 0 && `${category.videoCount} VIDEOS`}{category.videoCount > 0 && category.photoCount > 0 && " / "}{category.photoCount > 0 && `${category.photoCount} PHOTOS`}</span>
+        <h2>{category.title}</h2>
+        <p>{category.copy}</p>
+        <span class="work-eyebrow photo-action">EXPLORE THE LIBRARY ↓</span>
+      </div>
+    </a>)}
   </section>
-  <div class="work-wrap photo-gallery-heading"><h2 class="work-eyebrow">SELECTED PHOTOGRAPHS / ALL WORK</h2><p>Events, everyday stories, and everything in between.</p></div>
-  <PhotoGallery />
+  <section id="portfolio-library" data-media-library aria-label="Photo and video portfolio">
+    <div class="work-wrap photo-gallery-heading"><h2 class="work-eyebrow">SELECTED PHOTO &amp; VIDEO</h2><p>Explore the photographs and films, then filter by the work you want to see.</p></div>
+    <div class="media-switch work-wrap" role="group" aria-label="Choose photos or videos">
+      <button type="button" data-media="videos" aria-pressed="true" aria-controls="video-panel">VIDEOS <span>{portfolioVideos.length}</span></button>
+      <button type="button" data-media="photos" aria-pressed="false" aria-controls="photo-panel">PHOTOS <span>{images.length}</span></button>
+    </div>
+    <div id="video-panel" data-media-panel="videos"><VideoGallery /></div>
+    <div id="photo-panel" data-media-panel="photos" hidden><PhotoGallery filterable /></div>
+  </section>
 </Work>
 <style>
+  [data-media-panel][hidden] { display: none; }
+  .media-switch { display: flex; gap: 8px; padding-bottom: 24px; }
+  .media-switch button { display: flex; align-items: center; gap: 16px; padding: 16px 24px; border: 1px solid #f4ead950; background: #04091b; color: #f4ead9; font-family: var(--font-heading); font-size: 15px; letter-spacing: .06em; cursor: pointer; }
+  .media-switch button[aria-pressed="true"] { background: #f4ead9; color: #04091b; border-color: #f4ead9; }
+  .media-switch button span { font-size: 11px; opacity: .65; }
+  .media-switch button:focus-visible { outline: 2px solid #f4ead9; outline-offset: 4px; }
   .photo-heading { padding-bottom: 36px; }
-  .photo-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; padding-bottom: 64px; }
-  .photo-option { display: flex; flex-direction: column; gap: 20px; padding: clamp(20px, 2.5vw, 32px); color: inherit; background: #04091bcc; border: 1px solid #f4ead94d; }
+  .category-bar-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .category-bar-heading > div { display: flex; gap: 8px; }
+  .category-bar-heading button { width: 40px; height: 40px; border: 1px solid #f4ead960; background: transparent; color: #f4ead9; cursor: pointer; }
+  .photo-options { display: grid; grid-auto-flow: column; grid-auto-columns: min(340px, 82vw); gap: 16px; overflow-x: auto; padding: 4px 4px 20px; margin-bottom: 48px; scrollbar-width: thin; scrollbar-color: #f4ead980 transparent; }
+  .photo-option { display: flex; flex-direction: column; gap: 0; color: inherit; background: #04091bcc; border: 1px solid #f4ead94d; }
+  #portfolio-library { scroll-margin-top: 100px; }
+  .photo-option-image { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #000; }
+  .photo-option-image--goosehunt { object-position: 50% 0%; }
+  .photo-option-copy { display: flex; flex: 1; flex-direction: column; gap: 20px; padding: clamp(20px, 2.5vw, 32px); }
   a.photo-option:hover { border-color: #f4ead9; }
   .photo-option h2 { font-family: var(--font-heading); font-size: clamp(22px, 2.4vw, 32px); line-height: 1.1; letter-spacing: -.025em; }
   .photo-option p { font-family: var(--font-serif); font-size: 21px; line-height: 1.45; }
   .photo-action { margin-top: auto; padding-top: 16px; border-top: 1px solid #f4ead94d; }
   .photo-gallery-heading { padding-bottom: 24px; }
   .photo-gallery-heading p { font-family: var(--font-serif); font-size: 22px; margin-top: 12px; }
-  @media (max-width: 809px) { .photo-options { grid-template-columns: 1fr; } }
+  .photo-options:focus-visible, .category-bar-heading button:focus-visible { outline: 2px solid #f4ead9; outline-offset: 4px; }
 </style>
+
+<script>
+  const categoryStrip = document.querySelector<HTMLElement>('[data-category-strip]');
+  if (categoryStrip) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const originals = Array.from(categoryStrip.querySelectorAll<HTMLAnchorElement>('.photo-option'));
+    const clones = originals.map(card => {
+      const clone = card.cloneNode(true) as HTMLAnchorElement;
+      clone.setAttribute('aria-hidden', 'true'); clone.tabIndex = -1;
+      categoryStrip.append(clone);
+      return clone;
+    });
+    let pauseUntil = 0;
+    let previousTime = 0;
+    const cycleWidth = () => clones[0].offsetLeft - originals[0].offsetLeft;
+    const advance = (direction = 1) => {
+      pauseUntil = Date.now() + 8000;
+      const step = originals[0].offsetWidth + 16;
+      categoryStrip.scrollBy({ left: direction * step, behavior: reducedMotion.matches ? 'instant' : 'smooth' });
+    };
+    ['pointerdown', 'wheel', 'keydown'].forEach(event => categoryStrip.addEventListener(event, () => { pauseUntil = Date.now() + 8000; }, { passive: true }));
+    document.querySelector('[data-category-prev]')?.addEventListener('click', () => advance(-1));
+    document.querySelector('[data-category-next]')?.addEventListener('click', () => advance(1));
+    const tick = (time: number) => {
+      const elapsed = previousTime ? Math.min(time - previousTime, 50) : 0;
+      previousTime = time;
+      if (!reducedMotion.matches && !document.hidden && !categoryStrip.contains(document.activeElement) && Date.now() > pauseUntil) {
+        const width = cycleWidth();
+        if (width > 0) {
+          categoryStrip.scrollLeft += elapsed * .035;
+          if (categoryStrip.scrollLeft >= width) categoryStrip.scrollLeft -= width;
+        }
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  document.querySelectorAll<HTMLElement>('[data-media-library]').forEach(root => {
+    root.querySelectorAll<HTMLButtonElement>('[data-media]').forEach(button => button.addEventListener('click', () => {
+      root.querySelectorAll('[data-media]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      root.querySelectorAll<HTMLElement>('[data-media-panel]').forEach(panel => { panel.hidden = panel.dataset.mediaPanel !== button.dataset.media; });
+    }));
+    document.querySelectorAll<HTMLAnchorElement>('[data-category-jump]').forEach(link => link.addEventListener('click', () => {
+      const category = link.dataset.categoryJump!;
+      const photoOnly = category === 'photojournalism' || category === 'portraits' || category === 'travel';
+      root.querySelector<HTMLButtonElement>(`[data-media="${photoOnly ? 'photos' : 'videos'}"]`)?.click();
+      root.querySelector<HTMLButtonElement>('button[data-format="all"]')?.click();
+      const search = root.querySelector<HTMLInputElement>('[data-video-search]');
+      if (search) { search.value = ''; search.dispatchEvent(new Event('input', { bubbles: true })); }
+      root.querySelector<HTMLButtonElement>(`[data-video-filter="${category}"]`)?.click();
+      root.querySelector<HTMLButtonElement>(`[data-filter="${category === 'travel' ? 'photojournalism' : category}"]`)?.click();
+    }));
+  });
+</script>

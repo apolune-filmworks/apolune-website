@@ -1,21 +1,30 @@
 ---
 import { withBase } from "../lib/urls";
 import { images, rows as allRows } from "../data/event-photos.json";
-interface Props { category?: 'event' | 'photojournalism'; label?: string; }
-const { category, label = "Photography by Ansel Tan" } = Astro.props;
+interface Props { category?: 'event' | 'photojournalism'; label?: string; filterable?: boolean; }
+const { category, label = "Photography by Ansel Tan", filterable = false } = Astro.props;
 const selected = images.map((image, index) => ({ ...image, index })).filter(image => !category || image.category === category);
 const rows = category ? Array.from({ length: Math.ceil(selected.length / 3) }, (_, i) => selected.slice(i * 3, i * 3 + 3).map(image => ({ basis: `${image.width / image.height}`, images: [image.index] }))) : allRows;
+const filters = [{ id: "all", label: "All" }, { id: "music", label: "Live Music" }, { id: "events", label: "Events" }, { id: "campaigns", label: "Campaigns" }, { id: "photojournalism", label: "Photojournalism" }, { id: "portraits", label: "Portraits" }];
 const ratio = (column: { images: number[] }) => column.images.reduce((sum, index) => sum + images[index].height / images[index].width, 0);
 ---
-<section class="event-gallery work-wrap" aria-label={label}>
+<section class="photo-library work-wrap" aria-label={label}>
+  {filterable && <div class="photo-filter-bar">
+    <div class="photo-filters" role="group" aria-label="Filter photography">
+      {filters.map(filter => <button type="button" data-filter={filter.id} aria-pressed={filter.id === 'all'}>{filter.label}<span>{filter.id === 'all' ? selected.length : selected.filter(image => image.tags.includes(filter.id)).length}</span></button>)}
+    </div>
+    <p class="photo-results" data-results role="status" aria-live="polite">{selected.length} photographs</p>
+  </div>}
+  <div class="event-gallery">
   {rows.map((row) => <div class="event-row" data-photo-row>
     {row.map((column) => <div class="event-column" data-column-ratio={ratio(column)} data-column-count={column.images.length} style={`flex:${1 / ratio(column)} 1 0%`}>
       {column.images.map((index) => {
         const image = images[index];
-        return <a class="event-tile" style={`--photo-ratio:${image.width / image.height}`} href={withBase(image.src)} data-photo={index} aria-label={`Open photograph ${selected.findIndex(item => item.index === index) + 1} of ${selected.length}`}><img src={withBase(image.src)} alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async" /></a>;
+        return <a class="event-tile" style={`--photo-ratio:${image.width / image.height}`} href={withBase(image.src)} data-photo={index} data-tags={image.tags.join(" ")} aria-label={`Open photograph ${selected.findIndex(item => item.index === index) + 1} of ${selected.length}`}><img src={withBase(image.src)} alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async" /></a>;
       })}
     </div>)}
   </div>)}
+  </div>
 </section>
 <dialog class="event-lightbox" aria-label="Photography viewer">
   <div class="event-lightbox-bar"><p data-photo-count aria-live="polite"></p><button type="button" data-close aria-label="Close photo viewer">CLOSE ✕</button></div>
@@ -23,7 +32,16 @@ const ratio = (column: { images: number[] }) => column.images.reduce((sum, index
   <div class="event-lightbox-controls"><button type="button" data-prev aria-label="Previous photograph">← PREVIOUS</button><button type="button" data-next aria-label="Next photograph">NEXT →</button></div>
 </dialog>
 <style>
-  .event-gallery { padding-bottom: clamp(56px, 8vw, 120px); }
+  .photo-library { padding-bottom: clamp(56px, 8vw, 120px); }
+  .photo-filter-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; padding-block: 16px; border-top: 1px solid #f4ead940; border-bottom: 1px solid #f4ead940; }
+  .photo-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+  .photo-filters button { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border: 1px solid transparent; background: transparent; color: #f4ead9; font-family: var(--font-heading); font-size: 13px; cursor: pointer; }
+  .photo-filters button span { font-size: 10px; opacity: .65; }
+  .photo-filters button[aria-pressed="true"] { background: #f4ead9; color: #04091b; }
+  .photo-filters button:hover { border-color: #f4ead980; }
+  .photo-filters button:focus-visible { outline: 2px solid #f4ead9; outline-offset: 3px; }
+  .photo-results { font-family: var(--font-heading); font-size: 12px; opacity: .75; }
+  @media (max-width: 600px) { .photo-filters { gap: 4px; } .photo-filters button { padding: 10px 12px; } }
   .event-row { display: flex; align-items: flex-start; gap: 4px; margin-bottom: 4px; }
   .event-column { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
   .event-tile { display: block; width: 100%; }
@@ -43,56 +61,92 @@ const ratio = (column: { images: number[] }) => column.images.reduce((sum, index
   }
 </style>
 <script>
-  // Solve each row using the images’ natural proportions, including every gutter.
-  // No fixed tile heights or object-fit cropping: the full photographs stay visible.
-  const gallery = document.querySelector<HTMLElement>('.event-gallery');
-  if (gallery) {
+  document.querySelectorAll<HTMLElement>('.photo-library').forEach(library => {
+    const gallery = library.querySelector<HTMLElement>('.event-gallery')!;
+    const originalRows = Array.from(gallery.children).map(row => row.cloneNode(true));
+    const tiles = Array.from(gallery.querySelectorAll<HTMLAnchorElement>('[data-photo]')).map(tile => tile.cloneNode(true) as HTMLAnchorElement);
+    const rowTemplate = gallery.querySelector<HTMLElement>('[data-photo-row]')!;
+    const columnTemplate = rowTemplate.querySelector<HTMLElement>('[data-column-ratio]')!;
     const layout = () => {
+      if (!gallery.clientWidth) return;
       const mobile = window.matchMedia('(max-width: 600px)').matches;
       gallery.querySelectorAll<HTMLElement>('[data-photo-row]').forEach(row => {
         const columns = Array.from(row.querySelectorAll<HTMLElement>('[data-column-ratio]'));
         const gap = parseFloat(getComputedStyle(row).columnGap) || 4;
         const ratios = columns.map(column => Number(column.dataset.columnRatio));
         const gutters = columns.map(column => gap * (Number(column.dataset.columnCount) - 1));
-        const inverseRatios = ratios.reduce((sum, ratio) => sum + 1 / ratio, 0);
-        const rowHeight = (row.clientWidth - gap * (columns.length - 1) + gutters.reduce((sum, gutter, i) => sum + gutter / ratios[i], 0)) / inverseRatios;
+        const height = (row.clientWidth - gap * (columns.length - 1) + gutters.reduce((sum, gutter, i) => sum + gutter / ratios[i], 0)) / ratios.reduce((sum, ratio) => sum + 1 / ratio, 0);
         columns.forEach((column, i) => {
           column.style.flex = mobile ? '' : '0 0 auto';
-          column.style.width = mobile ? '' : `${(rowHeight - gutters[i]) / ratios[i]}px`;
+          column.style.width = mobile ? '' : `${(height - gutters[i]) / ratios[i]}px`;
         });
       });
     };
     new ResizeObserver(layout).observe(gallery);
     layout();
-  }
+    library.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter!;
+        const selected = tiles.filter(tile => filter === 'all' || tile.dataset.tags?.split(' ').includes(filter));
+        library.querySelectorAll('[data-filter]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+        if (filter === 'all') {
+          gallery.replaceChildren(...originalRows.map(row => row.cloneNode(true)));
+        } else {
+          const rows: HTMLElement[] = [];
+          for (let i = 0; i < selected.length; i += 3) {
+            const row = rowTemplate.cloneNode(false) as HTMLElement;
+            selected.slice(i, i + 3).forEach(tile => {
+              const column = columnTemplate.cloneNode(false) as HTMLElement;
+              const img = tile.querySelector('img')!;
+              column.dataset.columnRatio = String(Number(img.getAttribute('height')) / Number(img.getAttribute('width')));
+              column.dataset.columnCount = '1';
+              column.append(tile.cloneNode(true));
+              row.append(column);
+            });
+            rows.push(row);
+          }
+          gallery.replaceChildren(...rows);
+        }
+        const results = library.querySelector('[data-results]');
+        if (results) results.textContent = `${selected.length} photographs${filter === 'all' ? '' : ` / ${button.childNodes[0].textContent}`}`;
+        layout();
+      });
+    });
 
-  const dialog = document.querySelector<HTMLDialogElement>('.event-lightbox');
-  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-photo]'));
-  if (dialog) {
+    const dialog = library.nextElementSibling as HTMLDialogElement;
+    if (!dialog?.matches('.event-lightbox')) return;
     const full = dialog.querySelector<HTMLImageElement>('[data-full-photo]')!;
     const count = dialog.querySelector<HTMLElement>('[data-photo-count]')!;
+    let links: HTMLAnchorElement[] = [];
     let current = 0;
+    let previousOverflow = '';
     const show = (index: number) => {
       current = (index + links.length) % links.length;
       full.src = links[current].href;
       full.alt = links[current].querySelector('img')?.alt ?? '';
       count.textContent = `${current + 1} / ${links.length}`;
     };
-    links.forEach((link, i) => link.addEventListener('click', (event) => {
-      event.preventDefault(); show(i); dialog.showModal();
+    gallery.addEventListener('click', event => {
+      const link = (event.target as Element).closest<HTMLAnchorElement>('[data-photo]');
+      if (!link || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      links = Array.from(gallery.querySelectorAll<HTMLAnchorElement>('[data-photo]'));
+      show(links.indexOf(link));
+      previousOverflow = document.documentElement.style.overflow;
+      dialog.showModal();
       document.documentElement.style.overflow = 'hidden';
-    }));
+    });
     dialog.querySelector('[data-close]')?.addEventListener('click', () => dialog.close());
     dialog.querySelector('[data-prev]')?.addEventListener('click', () => show(current - 1));
     dialog.querySelector('[data-next]')?.addEventListener('click', () => show(current + 1));
-    dialog.addEventListener('keydown', (event) => {
+    dialog.addEventListener('keydown', event => {
       if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
         event.preventDefault(); show(current + (event.key === 'ArrowLeft' ? -1 : 1));
       }
     });
     dialog.addEventListener('close', () => {
-      document.documentElement.style.overflow = '';
-      links[current].focus();
+      document.documentElement.style.overflow = previousOverflow;
+      links[current]?.focus();
     });
-  }
+  });
 </script>

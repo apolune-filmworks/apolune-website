@@ -20,6 +20,7 @@ const gallery = d.gallery?.length ? d.gallery : d.showcase ? [d.showcase] : [];
 const meta = [d.category, d.status, d.year].filter(Boolean);
 // Preserve existing video embeds, correcting YouTube watch URLs for iframe playback.
 const videoEmbed = (d.videoEmbed || '').replace('youtube.com/watch?v=', 'youtube.com/embed/');
+const watchId = videoEmbed.match(/(?:embed\/|watch\?v=)([\w-]{11})/)?.[1];
 const embedUrl = (url: string) => url.replace('youtube.com/watch?v=', 'youtube.com/embed/').replace('youtube.com/shorts/', 'youtube.com/embed/').replace('youtu.be/', 'www.youtube.com/embed/');
 ---
 <Base title={`${d.title} | Apolune`} description={d.logline || d.description || `${d.title} — an Apolune project.`}>
@@ -28,7 +29,7 @@ const embedUrl = (url: string) => url.replace('youtube.com/watch?v=', 'youtube.c
     <article class="project-detail">
       {d.cover && <div class="project-detail-cover"><img src={d.cover} alt={d.coverAlt || d.title} fetchpriority="high" /></div>}
       <header class="project-detail-header">
-        <h1>{d.title}</h1>
+        <h1 class:list={{ "project-title--long": d.title.length > 55 }}>{d.title}</h1>
         {d.subtitle && <p class="project-detail-subtitle">{d.subtitle}</p>}
         {meta.length > 0 && <div class="project-detail-meta">{meta.map((item) => <p>{item}</p>)}</div>}
       </header>
@@ -41,6 +42,7 @@ const embedUrl = (url: string) => url.replace('youtube.com/watch?v=', 'youtube.c
         <div class="project-credits-copy"><Content /></div>
       </section>}
       {videoEmbed && <section class="project-video" aria-label={`${d.title} video`} set:html={videoEmbed} />}
+      {watchId && <div class="project-detail-download"><a class="landing-link" href={`https://www.youtube.com/watch?v=${watchId}`} target="_blank" rel="noopener noreferrer">WATCH ON YOUTUBE ↗</a></div>}
       {d.videoPlaylistUrl && <section class="project-story" aria-labelledby="project-videos-title">
         <h2 id="project-videos-title" class="project-video-title">WATCH THE VIDEOS</h2>
         <p class="project-detail-description">Browse the individual videos below, or explore the full playlist on YouTube.</p>
@@ -62,3 +64,7 @@ const embedUrl = (url: string) => url.replace('youtube.com/watch?v=', 'youtube.c
   </main>
   <Footer />
 </Base>
+
+<style>
+  .project-detail-header h1.project-title--long { font-size: clamp(30px, 5vw, 64px); line-height: 1.08; }
+</style>

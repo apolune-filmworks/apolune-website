@@ -3,13 +3,18 @@ import Work from "../layouts/Work.astro";
 import ProjectCards from "../components/ProjectCards.astro";
 import { getProjects, isOriginalFilm } from "../lib/site";
 import { withBase } from "../lib/urls";
-const featured = ["face-forward", "slowburn"];
-const projects = (await getProjects({ include: ["luxury-sport-sedan", "wishbone"] }))
+const editorialProjects = ["wired-headphones", "technology-is-boring", "the-day-the-music-died", "vintage-tech", "bose", "ikea-bluetooth-speakers", "soundguys-brand-campaign", "huawei", "xreal", "viaim", "insta360", "mova", "navee", "havit"];
+const featured = ["face-forward", "slowburn", "in-the-land-of-the-living"];
+const projects = (await getProjects({ include: ["luxury-sport-sedan", "wishbone", ...editorialProjects] }))
   .filter((project) => !isOriginalFilm(project))
   .sort((a, b) => {
     const rank = (id: string) => featured.includes(id) ? featured.indexOf(id) : featured.length;
     return rank(a.id) - rank(b.id);
   });
+const brandIds = ["huawei", "xreal", "bose", "insta360", "mova", "navee", "viaim", "havit", "soundguys-brand-campaign"];
+const brands = brandIds.map(id => projects.find(project => project.id === id)).filter((project): project is (typeof projects)[number] => Boolean(project));
+const categoryFor = (category: string) => /music video/i.test(category) ? "music" : /campaign|^commercial$/i.test(category) ? "campaigns" : /tech criticism|commercial work/i.test(category) ? "tech" : "other";
+const filters = [{id: 'all', label: 'All Work'}, {id: 'music', label: 'Live Music & Music Videos'}, {id: 'campaigns', label: 'Campaigns'}, {id: 'tech', label: 'Tech & Editorial'}, {id: 'other', label: 'Other Video Work'}];
 ---
 <Work title="COMMERCIAL / VIDEO WORK" description="Commercial projects, music videos, campaigns, and more from Apolune.">
   <header class="work-heading work-wrap">
@@ -18,7 +23,71 @@ const projects = (await getProjects({ include: ["luxury-sport-sedan", "wishbone"
     <p class="work-lead">Your vision, brought to the screen.</p>
     <p class="work-copy">Music videos, commercial projects, campaigns, and video journalism: this is the work we make with artists, bands, brands, and publications. We bring the same attention to story, image, and sound to every collaboration, shaping each piece around the people behind it and the audience it needs to reach. We can take a brief from concept to delivery or join an existing team for the stages that need us.</p>
   </header>
-  <section class="project-library" aria-label="COMMERCIAL / VIDEO WORK projects">
-    <ProjectCards projects={projects} />
-  </section>
+  <div data-commercial-library>
+    <div class="commercial-filters work-wrap" role="group" aria-label="Filter commercial and video projects by type">
+      {filters.map(filter => <button type="button" data-work-filter={filter.id} aria-pressed={filter.id === 'all'}>{filter.label}<span>{projects.filter(project => filter.id === 'all' || categoryFor(project.data.category) === filter.id).length}</span></button>)}
+    </div>
+    <p class="commercial-results work-wrap" data-work-results role="status" aria-live="polite">{projects.length} projects</p>
+    <section class="brand-section work-wrap" data-brand-section aria-labelledby="brand-heading">
+      <div class="brand-heading"><div><h2 id="brand-heading" class="work-eyebrow">BRAND CAMPAIGNS</h2><p>Selected work for brands, through SoundGuys &amp; Android Authority.</p></div><div class="brand-controls"><button type="button" data-brands-prev aria-label="Previous brands">←</button><button type="button" data-brands-next aria-label="Next brands">→</button></div></div>
+      <div class="brand-strip" data-brand-strip tabindex="0" aria-label="Brand campaigns. Scroll horizontally to browse.">
+        {brands.map(brand => <a class="brand-card" href={withBase(`/projects/${brand.id}`)} aria-label={`Explore ${brand.data.title} campaigns`}>
+          <div class="brand-logo"><img src={withBase(`/assets/brands/${brand.id}.${brand.id === 'xreal' ? 'svg' : 'png'}`)} alt={`${brand.data.title} logo`} loading="lazy" /></div>
+          <span>{brand.id === 'soundguys-brand-campaign' ? 'SoundGuys' : brand.data.title}<span aria-hidden="true">↗</span></span>
+        </a>)}
+      </div>
+    </section>
+    <section class="project-library" data-project-section aria-label="COMMERCIAL / VIDEO WORK projects">
+      <ProjectCards projects={projects} filterable hiddenProjectIds={brandIds} />
+    </section>
+  </div>
 </Work>
+
+<style>
+  .commercial-filters { display: flex; flex-wrap: wrap; gap: 8px; padding-block: 16px; border-block: 1px solid #f4ead940; }
+  .commercial-filters button { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: transparent; border: 1px solid transparent; color: #f4ead9; font-family: var(--font-heading); font-size: 13px; cursor: pointer; }
+  .commercial-filters button[aria-pressed="true"] { background: #f4ead9; color: #04091b; }
+  .commercial-filters button:hover { border-color: #f4ead980; }
+  .commercial-filters button span { font-size: 10px; opacity: .65; }
+  .commercial-results { padding-block: 16px 32px; font-family: var(--font-heading); font-size: 12px; opacity: .75; }
+  .brand-section { padding-bottom: 48px; }
+  .brand-section[hidden], [data-project-section][hidden] { display: none; }
+  .brand-heading { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 20px; }
+  .brand-heading p { margin-top: 10px; font-family: var(--font-serif); font-size: 21px; }
+  .brand-controls { display: flex; gap: 8px; }
+  .brand-controls button { width: 40px; height: 40px; color: #f4ead9; background: transparent; border: 1px solid #f4ead950; cursor: pointer; }
+  .brand-strip { display: grid; grid-auto-flow: column; grid-auto-columns: 190px; gap: 16px; overflow-x: auto; padding: 4px 4px 16px; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: #f4ead980 transparent; }
+  .brand-card { display: flex; flex-direction: column; gap: 20px; padding: 24px 20px 20px; border: 1px solid #f4ead940; background: #04091bcc; color: #f4ead9; scroll-snap-align: start; }
+  .brand-logo { display: grid; place-items: center; height: 90px; }
+  .brand-logo img { width: 100%; height: 100%; object-fit: contain; filter: brightness(0) invert(1); }
+  .brand-card > span { display: flex; justify-content: space-between; gap: 12px; padding-top: 16px; border-top: 1px solid #f4ead940; font-family: var(--font-heading); font-size: 12px; }
+  .brand-card:hover { border-color: #f4ead9; }
+  button:focus-visible, .brand-strip:focus-visible { outline: 2px solid #f4ead9; outline-offset: 4px; }
+</style>
+<script>
+  const root = document.querySelector<HTMLElement>('[data-commercial-library]');
+  if (root) {
+    const items = Array.from(root.querySelectorAll<HTMLElement>('[data-project-type]'));
+    const brandSection = root.querySelector<HTMLElement>('[data-brand-section]')!;
+    const projectSection = root.querySelector<HTMLElement>('[data-project-section]')!;
+    const brandCount = root.querySelectorAll('.brand-card').length;
+    root.querySelectorAll<HTMLButtonElement>('[data-work-filter]').forEach(button => button.addEventListener('click', () => {
+      const filter = button.dataset.workFilter!;
+      let count = 0;
+      items.forEach(item => { item.hidden = filter === 'all' ? item.dataset.brandProject === 'true' : item.dataset.projectType !== filter; if (!item.hidden) count++; });
+      const grid = projectSection.querySelector('.project-library-grid')!;
+      const ordered = [...items];
+      if (filter === 'tech') ordered.sort((a, b) => Number(b.dataset.editorialPriority === 'true') - Number(a.dataset.editorialPriority === 'true'));
+      grid.append(...ordered);
+      projectSection.hidden = count === 0;
+      brandSection.hidden = filter !== 'all';
+      if (!brandSection.hidden) count += brandCount;
+      root.querySelectorAll('[data-work-filter]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      root.querySelector('[data-work-results]')!.textContent = `${count} ${count === 1 ? 'project' : 'projects'}`;
+    }));
+    const strip = root.querySelector<HTMLElement>('[data-brand-strip]')!;
+    const move = (direction: number) => strip.scrollBy({left: direction * strip.clientWidth * .8, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+    root.querySelector('[data-brands-prev]')?.addEventListener('click', () => move(-1));
+    root.querySelector('[data-brands-next]')?.addEventListener('click', () => move(1));
+  }
+</script>

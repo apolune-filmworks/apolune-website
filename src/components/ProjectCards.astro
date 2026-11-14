@@ -5,16 +5,20 @@ import Icon from "./Icon.astro";
 import ScrollFade from "./ScrollFade.astro";
 interface Props {
   projects: Awaited<ReturnType<typeof getProjects>>;
+  filterable?: boolean;
+  hiddenProjectIds?: string[];
 }
-const { projects } = Astro.props;
+const { projects, filterable = false, hiddenProjectIds = [] } = Astro.props;
+const categoryFor = (category: string) => /music video/i.test(category) ? "music" : /campaign|^commercial$/i.test(category) ? "campaigns" : /tech criticism|commercial work/i.test(category) ? "tech" : "other";
 ---
   <div class="project-library-grid">
     {projects.map((project) => (
+      <div class="project-filter-item" data-project-type={filterable ? categoryFor(project.data.category) : undefined} data-editorial-priority={/tech criticism/i.test(project.data.category) ? "true" : undefined} data-brand-project={hiddenProjectIds.includes(project.id) ? "true" : undefined} hidden={hiddenProjectIds.includes(project.id)}>
       <ScrollFade>
       <a class="upcoming-card library-card" href={withBase(`/projects/${project.id}`)} aria-label={`Explore ${project.data.title}`}>
         <img class="upcoming-image" src={project.data.libraryCover || project.data.cover} alt={project.data.libraryCoverAlt || project.data.coverAlt || project.data.title} loading="lazy" />
         <div class="upcoming-copy">
-          <h3 class="upcoming-title library-title">{project.data.title}</h3>
+          <h3 class:list={["upcoming-title", "library-title", { "library-title--long": project.data.title.length > 45, "library-title--very-long": project.data.title.length > 75 }]}>{project.data.title}</h3>
           {project.data.subtitle && <p class="library-subtitle">{project.data.subtitle}</p>}
           <p class="library-category">{project.data.category}</p>
           {project.data.cardNote && <p class="library-note">{project.data.cardNote}</p>}
@@ -22,5 +26,14 @@ const { projects } = Astro.props;
         </div>
       </a>
       </ScrollFade>
+      </div>
     ))}
   </div>
+
+<style>
+  .project-filter-item { min-width: 0; }
+  .project-filter-item > :global(.sf), .project-filter-item :global(.library-card) { height: 100%; }
+  .project-filter-item[hidden] { display: none; }
+  .library-title--long { font-size: clamp(25px, 2.6vw, 36px); line-height: 1.12; }
+  .library-title--very-long { font-size: clamp(22px, 2.2vw, 30px); }
+</style>

@@ -28,8 +28,8 @@ export async function getProjects({ include = [] }: { include?: string[] } = {})
     .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 }
 
-/** Narrative and documentary projects are originals unless assigned to commissioned work. */
+/** Original films and theatre share the originals library; commissioned work stays separate. */
 export function isOriginalFilm(project: Awaited<ReturnType<typeof getProjects>>[number]) {
   const commissioned = new Set(["puddy-waters"]);
-  return !commissioned.has(project.id) && /narrative|documentary/i.test(project.data.category);
+  return !commissioned.has(project.id) && /narrative|documentary|original film|original theatre/i.test(project.data.category);
 }
